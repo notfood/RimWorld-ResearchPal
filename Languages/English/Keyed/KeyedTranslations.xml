@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<LanguageData>
+  
+  <BuildingResearchTree>Building Research Tree</BuildingResearchTree>
+  
+  <AllowsBuildingX>Enables construction {0}.</AllowsBuildingX>
+  <AllowsCraftingX>Enables recipe {0}.</AllowsCraftingX>
+  <AllowsSowingXinY>Enables sowing {0} in {1}.</AllowsSowingXinY>
+  
+  <LClickReplaceQueue>Left-Click to replace queue</LClickReplaceQueue>
+  <LClickRemoveFromQueue>Left-Click to remove from queue</LClickRemoveFromQueue>
+  <SLClickAddToQueue>Shift-Left-Click to add to queue</SLClickAddToQueue>
+  <RClickForDetails>Right click for details</RClickForDetails>
+  
+  <RequiresThis>Requires</RequiresThis>
+  <LeadsTo>Leads to</LeadsTo>
+  
+  <RequireMissing>Requirements missing!</RequireMissing>
+  <RequireBenchLabel>Require bench:</RequireBenchLabel>
+  <RequireFacilityLabel>Require facility:</RequireFacilityLabel>
+  
+  <ResearchPal>ResearchPal</ResearchPal>
+  <ResearchPal.ShowNotificationPopup>Hide Notification Popup</ResearchPal.ShowNotificationPopup>
+  <ResearchPal.ShowNotificationTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationTip>
+
+</LanguageData>
