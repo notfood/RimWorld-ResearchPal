@@ -16,30 +16,10 @@ namespace ResearchPal
         public static Dictionary<Rect, List<String>> hubTips        = new Dictionary<Rect, List<string>>();
         public static List<Node> nodes                              = new List<Node>();
 
-        public override void PreOpen()
-        {
-            base.PreOpen();
-
-            /*if ( !ResearchTree.Initialized )
-            {
-                // initialize tree
-                ResearchTree.Initialize();
-
-                // spit out debug info
-#if DEBUG
-                Log.Message( "ResearchTree :: duplicated positions:\n " + string.Join( "\n", ResearchTree.Forest.Where( n => ResearchTree.Forest.Any( n2 => n.Pos == n2.Pos && n != n2 ) ).Select( n => n.Pos + n.Research.LabelCap + " (" + n.Genus + ")" ).ToArray() ) );
-
-                foreach( Tree tree in ResearchTree.Trees )
-                {
-                    Log.Message( tree.ToString() );
-                }
-                Log.Message( ResearchTree.Orphans.ToString() );
-#endif
-            }*/
-            this.windowRect.x = 0f;
-            this.windowRect.y = 0f;
-            this.windowRect.width = (float)Screen.width;
-            this.windowRect.height = (float)Screen.height - 35f;
+        public override Vector2 RequestedTabSize {
+            get {
+                return new Vector2 (UI.screenWidth, UI.screenHeight);
+            }
         }
 
         public virtual float TabButtonBarPercent
