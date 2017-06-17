@@ -32,13 +32,13 @@ namespace ResearchPal
 
         static ResearchTree()
         {
-            Button = ContentFinder<Texture2D>.Get("button");
-            ButtonActive = ContentFinder<Texture2D>.Get("button-active");
-            Circle = ContentFinder<Texture2D>.Get("circle");
-            End = ContentFinder<Texture2D>.Get("end");
-            EW = ContentFinder<Texture2D>.Get("ew");
-            MoreIcon = ContentFinder<Texture2D>.Get("more");
-            NS = ContentFinder<Texture2D>.Get("ns");
+            Button = ContentFinder<Texture2D>.Get("UI/Research/button");
+            ButtonActive = ContentFinder<Texture2D>.Get("UI/Research/button-active");
+            Circle = ContentFinder<Texture2D>.Get("UI/Research/circle");
+            End = ContentFinder<Texture2D>.Get("UI/Research/end");
+            EW = ContentFinder<Texture2D>.Get("UI/Research/ew");
+            MoreIcon = ContentFinder<Texture2D>.Get("UI/Research/more");
+            NS = ContentFinder<Texture2D>.Get("UI/Research/ns");
         }
 
         public static void DrawLine(Pair<Node, Node> connection, Color color, bool reverseDirection = false)
@@ -110,7 +110,7 @@ namespace ResearchPal
                     if (!MainTabWindow_ResearchTree.hubTips.ContainsKey(hub))
                     {
                         MainTabWindow_ResearchTree.hubTips.Add(hub, new List<string>());
-                        MainTabWindow_ResearchTree.hubTips[hub].Add("LeadsTo".Translate());
+                        MainTabWindow_ResearchTree.hubTips[hub].Add(ResourceBank.String.LeadsTo);
                     }
                     MainTabWindow_ResearchTree.hubTips[hub].Add(connection.First.Research.LabelCap);
 
@@ -123,7 +123,7 @@ namespace ResearchPal
                     if (!MainTabWindow_ResearchTree.hubTips.ContainsKey(hub))
                     {
                         MainTabWindow_ResearchTree.hubTips.Add(hub, new List<string>());
-                        MainTabWindow_ResearchTree.hubTips[hub].Add("RequiresThis".Translate());
+                        MainTabWindow_ResearchTree.hubTips[hub].Add(ResourceBank.String.RequiresThis);
                     }
                     MainTabWindow_ResearchTree.hubTips[hub].Add(connection.Second.Research.LabelCap);
                 }
@@ -393,20 +393,18 @@ namespace ResearchPal
 
             // get the main 'Trees', looping over all defs, find strings of Research named similarly.
             // We're aiming for finding things like Construction I/II/III/IV/V here.
-            Dictionary<string, List<Node>> trunks = new Dictionary<string, List<Node>>();
-            List<Node> orphans = new List<Node>(); // temp
-            foreach (Node node in Forest)
-            {
-				// try to remove the amount of random hits by requiring Trees to be directly linked.
-				if (node.Parents.Any(parent => parent.Genus == node.Genus) ||
-				     node.Children.Any(child => child.Genus == node.Genus))
-				{
-					if (!trunks.ContainsKey (node.Genus)) {
-						trunks.Add (node.Genus, new List<Node> ());
-					}
-					trunks [node.Genus].Add (node);
-				} else {
-					 orphans.Add(node);
+            Dictionary<string, List<Node>> trunks = new Dictionary<string, List<Node>> ();
+            List<Node> orphans = new List<Node> (); // temp
+            foreach (Node node in Forest) {
+                // try to remove the amount of random hits by requiring Trees to be directly linked.
+                if (node.Parents.Any (parent => parent.Genus == node.Genus) ||
+                     node.Children.Any (child => child.Genus == node.Genus)) {
+                    if (!trunks.ContainsKey (node.Genus)) {
+                        trunks.Add (node.Genus, new List<Node> ());
+                    }
+                    trunks [node.Genus].Add (node);
+                } else {
+                    orphans.Add (node);
                 }
             }
 

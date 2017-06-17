@@ -12,7 +12,8 @@ namespace ResearchPal
         public const int     LineMaxLengthNodes = 20;
         public const int     MinTrunkSize       = 2;
 
-		public static bool   showNotification   = true;
+        public static bool   showNotification   = true;
+        public static bool   shouldPause        = false;
 
         #endregion tuning parameters
 
@@ -21,28 +22,31 @@ namespace ResearchPal
         public const float   HubSize            = 16f;
         public const int     TipID              = 24 * 1271;
 
-		public static readonly Vector2 IconSize = new Vector2 (18f, 18f);
-		public static readonly Vector2 NodeMargins = new Vector2 (50f, 10f);
-		public static readonly Vector2 NodeSize = new Vector2 (200f, 50f);
+        public static readonly Vector2 IconSize = new Vector2 (18f, 18f);
+        public static readonly Vector2 NodeMargins = new Vector2 (50f, 10f);
+        public static readonly Vector2 NodeSize = new Vector2 (200f, 50f);
 
         #endregion UI elements
 
-		public static void DoSettingsWindowContents (Rect rect)
-		{
-			Listing_Standard list = new Listing_Standard (GameFont.Small);
-			list.ColumnWidth = rect.width;
-			list.Begin (rect);
+        public static void DoSettingsWindowContents (Rect rect)
+        {
+            Listing_Standard list = new Listing_Standard (GameFont.Small);
+            list.ColumnWidth = rect.width;
+            list.Begin (rect);
 
-			list.CheckboxLabeled ("ResearchPal.ShowNotificationPopup".Translate (), ref showNotification,
-								  "ResearchPal.ShowNotificationTip".Translate ());
+            list.CheckboxLabeled (ResourceBank.String.ShowNotificationPopup, ref showNotification,
+                                  ResourceBank.String.ShowNotificationTip);
+            list.CheckboxLabeled (ResourceBank.String.ShouldPauseOnOpen, ref shouldPause,
+                                  ResourceBank.String.ShouldPauseOnOpenTip);
 
-			list.End ();
-		}
+            list.End ();
+        }
 
-		public override void ExposeData ()
-		{
-			base.ExposeData ();
-			Scribe_Values.Look (ref showNotification, "ShowNotificationPopup", true);
-		}
+        public override void ExposeData ()
+        {
+            base.ExposeData ();
+            Scribe_Values.Look (ref showNotification, "ShowNotificationPopup", true);
+            Scribe_Values.Look (ref shouldPause, "ShouldPauseOnOpen", false);
+        }
     }
 }

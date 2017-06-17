@@ -26,17 +26,12 @@ namespace ResearchPal
 
         static Queue()
         {
-            CircleFill = ContentFinder<Texture2D>.Get("circle-fill");
+            CircleFill = ContentFinder<Texture2D>.Get("UI/Research/circle-fill");
         }
 
-        public Queue(Game game) {
-			
-		}
+        public Queue (Game game) { }
 
-		public Queue ()
-		{
-
-		}
+        public Queue () { }
 
         public static void Dequeue(Node node)
         {
@@ -161,34 +156,35 @@ namespace ResearchPal
             }
         }
 
-		/// <summary>
-		/// Override for Verse.ResearchMananager.MakeProgress
-		///
-		/// Changes default pop-up when research is complete to an inbox message, and starts the next research in the queue - if available.
-		/// </summary>
-		/// <param name="amount"></param>
-		public static ResearchProjectDef Next(ResearchProjectDef last) {
-			Pop ();
+        /// <summary>
+        /// Override for Verse.ResearchMananager.MakeProgress
+        ///
+        /// Changes default pop-up when research is complete to an inbox message, and starts the next research in the queue - if available.
+        /// </summary>
+        /// <param name="amount"></param>
+        public static ResearchProjectDef Next (ResearchProjectDef last)
+        {
+            Pop ();
 
-			string label = "ResearchFinished".Translate (last.LabelCap);
-			string text = "ResearchFinished".Translate (last.LabelCap) + "\n\n" + last.DescriptionDiscovered;
-			LetterDef letter;
-			ResearchProjectDef next;
+            string label = ResourceBank.String.ResearchFinished (last.LabelCap);
+            string text = label + "\n\n" + last.DescriptionDiscovered;
+            LetterDef letter;
+            ResearchProjectDef next;
 
-			if (_queue.Count > 0) {
-				next = _queue.First ().Research;
-				text += "\n\nNext in queue: " + next.LabelCap;
-				letter = LetterDefOf.Good;
-			} else {
-				next = null;
-				text += "\n\nNext in queue: none";
-				letter = LetterDefOf.BadNonUrgent;
-			}
+            if (_queue.Count > 0) {
+                next = _queue.First ().Research;
+                text += "\n\nNext in queue: " + next.LabelCap;
+                letter = LetterDefOf.Good;
+            } else {
+                next = null;
+                text += "\n\nNext in queue: none";
+                letter = LetterDefOf.BadNonUrgent;
+            }
 
-			Find.LetterStack.ReceiveLetter (label, text, letter);
+            Find.LetterStack.ReceiveLetter (label, text, letter);
 
-			return next;
-		}
+            return next;
+        }
 
         #endregion Methods
     }

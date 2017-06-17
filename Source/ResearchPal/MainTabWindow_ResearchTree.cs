@@ -30,6 +30,15 @@ namespace ResearchPal
             }
         }
 
+        public override void PreOpen ()
+        {
+            base.PreOpen ();
+
+            if (Settings.shouldPause) {
+                this.forcePause = Settings.shouldPause;
+            }
+        }
+
         public override void DoWindowContents( Rect canvas )
         {
             PrepareTreeForDrawing();

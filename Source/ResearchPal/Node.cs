@@ -19,7 +19,7 @@ namespace ResearchPal
         public List<Node> Children = new List<Node>();
         public int Depth;
         public string Genus;
-		public string Family;
+        public string Family;
         public List<Node> Parents = new List<Node>();
         public IntVec2 Pos;
         public ResearchProjectDef Research;
@@ -46,8 +46,8 @@ namespace ResearchPal
 
         static Node()
         {
-            ResearchIcon = ContentFinder<Texture2D>.Get("Research");
-            WarningIcon = ContentFinder<Texture2D>.Get("warning");
+            ResearchIcon = ContentFinder<Texture2D>.Get("UI/Research/Icon");
+            WarningIcon = ContentFinder<Texture2D>.Get("UI/Research/Warning");
         }
 
 
@@ -55,17 +55,17 @@ namespace ResearchPal
         {
             Research = research;
 
-			// get the Genus, this is the research family name, and will be used to group research together.
-			// First see if we have a ":" in the name
-			List<string> parts = research.LabelCap.Split (":".ToCharArray ()).ToList ();
-			if (parts.Count > 1) {
-				Genus = parts.First ();
-			} else // otherwise, strip the last word (intended to catch 1,2,3/ I,II,III,IV suffixes)
-			  {
-				parts = research.LabelCap.Split (" ".ToCharArray ()).ToList ();
-				parts.Remove (parts.Last ());
-				Genus = string.Join (" ", parts.ToArray ());
-			}
+            // get the Genus, this is the research family name, and will be used to group research together.
+            // First see if we have a ":" in the name
+            List<string> parts = research.LabelCap.Split (":".ToCharArray ()).ToList ();
+            if (parts.Count > 1) {
+                Genus = parts.First ();
+            } else // otherwise, strip the last word (intended to catch 1,2,3/ I,II,III,IV suffixes)
+              {
+                parts = research.LabelCap.Split (" ".ToCharArray ()).ToList ();
+                parts.Remove (parts.Last ());
+                Genus = string.Join (" ", parts.ToArray ());
+            }
 
             Parents = new List<Node>();
             Children = new List<Node>();
@@ -298,8 +298,8 @@ namespace ResearchPal
                 return;
             }
 
-			// set color
-			GUI.color = !Research.PrerequisitesCompleted ? Tree.GreyedColor : Tree.MediumColor;
+            // set color
+            GUI.color = !Research.PrerequisitesCompleted ? Tree.GreyedColor : Tree.MediumColor;
 
             // mouseover highlights
             if (Mouse.IsOver(Rect))
@@ -332,20 +332,20 @@ namespace ResearchPal
                 GUI.DrawTexture(Rect, ResearchTree.Button);
             }
 
-			// grey out center to create a progress bar effect, completely greying out research not started.
-			bool warn = false;
-            if (!Research.IsFinished)
-            {
-                Rect progressBarRect = Rect.ContractedBy(2f);
+            // grey out center to create a progress bar effect, completely greying out research not started.
+            bool warnLocked = false, warnPenalty = false;
+            if (!Research.IsFinished) {
+                Rect progressBarRect = Rect.ContractedBy (2f);
                 GUI.color = Tree.GreyedColor;
                 progressBarRect.xMin += Research.ProgressPercent * progressBarRect.width;
-                GUI.DrawTexture(progressBarRect, BaseContent.WhiteTex);
+                GUI.DrawTexture (progressBarRect, BaseContent.WhiteTex);
 
-				warn = IsLocked (Research);
+                warnLocked = IsLocked (Research);
+                warnPenalty = Research.techLevel > Faction.OfPlayer.def.techLevel;
             }
 
-			// draw the research label
-			GUI.color = Color.white;
+            // draw the research label
+            GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
             Text.WordWrap = true;
             Text.Font = _largeLabel ? GameFont.Tiny : GameFont.Small;
@@ -354,14 +354,17 @@ namespace ResearchPal
             // draw research cost and icon
             Text.Anchor = TextAnchor.UpperRight;
             Text.Font = GameFont.Small;
+            if (warnPenalty) {
+                GUI.color = Color.yellow;
+            }
+            Widgets.Label (CostLabelRect, Research.CostApparent.ToStringByStyle (ToStringStyle.Integer));
 
-            Widgets.Label(CostLabelRect, Research.CostApparent.ToStringByStyle(ToStringStyle.Integer));
-			if (warn) {
-				GUI.color = Color.white;
-				GUI.DrawTexture (CostIconRect, WarningIcon);
-			} else {
-				GUI.DrawTexture (CostIconRect, ResearchIcon);
-			}
+            GUI.color = Color.white;
+            if (warnLocked) {
+                GUI.DrawTexture (CostIconRect, WarningIcon);
+            } else {
+                GUI.DrawTexture (CostIconRect, ResearchIcon);
+            }
 
             Text.WordWrap = true;
 
@@ -401,43 +404,44 @@ namespace ResearchPal
                 // LMB is queue operations, RMB is info
                 if (Event.current.button == 0 && !Research.IsFinished)
                 {
-                    if (!Queue.IsQueued(this))
+                    if (!Queue.IsQueued (this))
                     {
-						if (warn) {
-							Messages.Message ("RequireMissing".Translate (), MessageSound.RejectInput);
-						}
+                        if (warnLocked) {
+                            Messages.Message (ResourceBank.String.RequireMissing, MessageSound.RejectInput);
+                        }
 
                         // if shift is held, add to queue, otherwise replace queue
-                        Queue.EnqueueRange(GetMissingRequiredRecursive ().Concat(new List<Node>(new[] { this })), Event.current.shift);
+                        Queue.EnqueueRange (GetMissingRequiredRecursive ().Concat (new List<Node> (new [] { this })), Event.current.shift);
                     }
                     else
                     {
                         Queue.Dequeue(this);
                     }
-				} else if (Event.current.button == 1) {
-					ResearchPalMod.JumpToHelp (Research);
-				}
+                } else if (Event.current.button == 1) {
+                    ResearchPalMod.JumpToHelp (Research);
+                }
             }
         }
 
-		private bool IsLocked(ResearchProjectDef research) {
-			if (research.requiredResearchBuilding != null || !research.requiredResearchFacilities.NullOrEmpty ()) {
-				if (ResearchPalMod.allResearchBenches.NullOrEmpty ()) {
-					return true;
-				}
+        private bool IsLocked (ResearchProjectDef research)
+        {
+            if (research.requiredResearchBuilding != null || !research.requiredResearchFacilities.NullOrEmpty ()) {
+                if (ResearchPalMod.allResearchBenches.NullOrEmpty ()) {
+                    return true;
+                }
 
-				foreach (var bench in ResearchPalMod.allResearchBenches) {
-					if (research.CanBeResearchedAt (bench, false)) {
-						continue;
-					}
-					return true;
-				}
+                foreach (var bench in ResearchPalMod.allResearchBenches) {
+                    if (research.CanBeResearchedAt (bench, false)) {
+                        continue;
+                    }
+                    return true;
+                }
 
-				return false;
-			}
+                return false;
+            }
 
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Get recursive list of all incomplete prerequisites
@@ -567,32 +571,38 @@ namespace ResearchPal
             text.AppendLine(Research.description);
             text.AppendLine();
 
+            var PlayerTechLevel = Faction.OfPlayer.def.techLevel;
+            if (Research.techLevel > PlayerTechLevel) {
+                text.AppendLine (ResourceBank.String.ResearchLevels(Research.techLevel, PlayerTechLevel) + " " +
+                             ResourceBank.String.ResearchPenalty (Research.CostFactor (PlayerTechLevel)));
+                text.AppendLine ();
+            }
+
             if (Research.requiredResearchBuilding != null)
             {
-                text.AppendLine("RequireBenchLabel".Translate() + " " + Research.requiredResearchBuilding.label);
+                text.AppendLine(ResourceBank.String.RequireBenchLabel + " " + Research.requiredResearchBuilding.label);
             }
             if (Research.requiredResearchFacilities != null)
             {
                 foreach (ThingDef rrf in Research.requiredResearchFacilities)
                 {
-                    text.AppendLine("RequireFacilityLabel".Translate() + " " + rrf.label);
+                    text.AppendLine(ResourceBank.String.RequireFacilityLabel + " " + rrf.label);
                 }
             }
-
             if (Queue.IsQueued(this))
             {
-                text.AppendLine("LClickRemoveFromQueue".Translate());
+                text.AppendLine(ResourceBank.String.LClickRemoveFromQueue);
             }
             else
             {
-                text.AppendLine("LClickReplaceQueue".Translate());
-                text.AppendLine("SLClickAddToQueue".Translate());
+                text.AppendLine(ResourceBank.String.LClickReplaceQueue);
+                text.AppendLine(ResourceBank.String.SLClickAddToQueue);
             }
 
-			//To Help System
-			if(ResearchPalMod.HasHelpTreeLoaded) {
-				text.AppendLine ("RClickForDetails".Translate ());
-			}
+            //To Help System
+            if (ResearchPalMod.HasHelpTreeLoaded) {
+                text.AppendLine (ResourceBank.String.RClickForDetails);
+            }
 
             return text.ToString();
         }

@@ -68,6 +68,7 @@
     <Compile Include="Injectors\ResearchManagerPatch.cs" />
     <Compile Include="Injectors\ResearchPalMod.cs" />
     <Compile Include="Util\ColorHelper.cs" />
+    <Compile Include="ResourceBank.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

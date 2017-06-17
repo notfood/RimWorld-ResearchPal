@@ -6,57 +6,57 @@ using Verse;
 
 namespace ResearchPal
 {
-	public class ResearchPalMod : Mod
-	{
-		public static readonly List<Building_ResearchBench> allResearchBenches = new List<Building_ResearchBench> ();
+    public class ResearchPalMod : Mod
+    {
+        public static readonly List<Building_ResearchBench> allResearchBenches = new List<Building_ResearchBench> ();
 
-		public ResearchPalMod (ModContentPack mcp) : base (mcp)
-		{
-			Harmony.HarmonyInstance.Create ("rimworld.research_engine").PatchAll (System.Reflection.Assembly.GetExecutingAssembly ());
+        public ResearchPalMod (ModContentPack mcp) : base (mcp)
+        {
+            Harmony.HarmonyInstance.Create ("rimworld.research_engine").PatchAll (System.Reflection.Assembly.GetExecutingAssembly ());
 
-			LongEventHandler.QueueLongEvent (ResearchTree.Initialize, "BuildingResearchTree", false, null);
-			LongEventHandler.ExecuteWhenFinished (InitializeHelpSuport);
+            LongEventHandler.QueueLongEvent (ResearchTree.Initialize, "BuildingResearchTree", false, null);
+            LongEventHandler.ExecuteWhenFinished (InitializeHelpSuport);
 
-			GetSettings<Settings> ();
-		}
+            GetSettings<Settings> ();
+        }
 
-		#region Overrides of Mod
+        #region Overrides of Mod
 
-		public override string SettingsCategory () { return "ResearchPal".Translate (); }
-		public override void DoSettingsWindowContents (UnityEngine.Rect inRect) { Settings.DoSettingsWindowContents (inRect); }
+        public override string SettingsCategory () { return ResourceBank.String.ResearchPal; }
+        public override void DoSettingsWindowContents (UnityEngine.Rect inRect) { Settings.DoSettingsWindowContents (inRect); }
 
-		#endregion
+        #endregion
 
-		#region HelpTree Support
+        #region HelpTree Support
 
-		private static MainButtonDef modHelp;
-		private static System.Reflection.MethodInfo helpWindow_JumpTo;
-		private static bool helpTreeLoaded;
+        private static MainButtonDef modHelp;
+        private static System.Reflection.MethodInfo helpWindow_JumpTo;
+        private static bool helpTreeLoaded;
 
-		private void InitializeHelpSuport ()
-		{
-			var type = GenTypes.GetTypeInAnyAssembly ("HelpTab.IHelpDefView");
-			if (type != null) {
-				modHelp = DefDatabase<MainButtonDef>.GetNamed ("ModHelp", false);
-				helpWindow_JumpTo = type.GetMethod ("JumpTo", new Type [] { typeof (Def) });
+        private void InitializeHelpSuport ()
+        {
+            var type = GenTypes.GetTypeInAnyAssembly ("HelpTab.IHelpDefView");
+            if (type != null) {
+                modHelp = DefDatabase<MainButtonDef>.GetNamed ("ModHelp", false);
+                helpWindow_JumpTo = type.GetMethod ("JumpTo", new Type [] { typeof (Def) });
 
-				helpTreeLoaded = true;
-			}
-		}
+                helpTreeLoaded = true;
+            }
+        }
 
-		public static void JumpToHelp (Def def)
-		{
-			if (helpTreeLoaded) {
-				helpWindow_JumpTo.Invoke (modHelp.TabWindow, new object [] { def });
-			}
-		}
+        public static void JumpToHelp (Def def)
+        {
+            if (helpTreeLoaded) {
+                helpWindow_JumpTo.Invoke (modHelp.TabWindow, new object [] { def });
+            }
+        }
 
-		public static bool HasHelpTreeLoaded {
-			get {
-				return helpTreeLoaded;
-			}
-		}
+        public static bool HasHelpTreeLoaded {
+            get {
+                return helpTreeLoaded;
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

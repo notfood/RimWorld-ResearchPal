@@ -15,6 +15,9 @@
   <RequiresThis>Requires</RequiresThis>
   <LeadsTo>Leads to</LeadsTo>
   
+  <ResearchLevels>{0} research, your tech level is {1}.</ResearchLevels>
+  <ResearchPenalty>It'll cost {0} times longer to research it.</ResearchPenalty>
+  
   <RequireMissing>Requirements missing!</RequireMissing>
   <RequireBenchLabel>Require bench:</RequireBenchLabel>
   <RequireFacilityLabel>Require facility:</RequireFacilityLabel>
@@ -22,5 +25,7 @@
   <ResearchPal>ResearchPal</ResearchPal>
   <ResearchPal.ShowNotificationPopup>Hide Notification Popup</ResearchPal.ShowNotificationPopup>
   <ResearchPal.ShowNotificationTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationTip>
+  <ResearchPal.ShouldPauseOnOpen>Pause on Display</ResearchPal.ShouldPauseOnOpen>
+  <ResearchPal.ShouldPauseOnOpenTip>Whenever the game should pause when the research tab is displayed.</ResearchPal.ShouldPauseOnOpenTip>
 
 </LanguageData>
