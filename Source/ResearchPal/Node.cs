@@ -425,19 +425,21 @@ namespace ResearchPal
 
         private bool IsLocked (ResearchProjectDef research)
         {
-            if (research.requiredResearchBuilding != null || !research.requiredResearchFacilities.NullOrEmpty ()) {
-                if (ResearchPalMod.allResearchBenches.NullOrEmpty ()) {
+            if (research.requiredResearchBuilding != null || !research.requiredResearchFacilities.NullOrEmpty ())
+            {
+                if (ResearchPalMod.allResearchBenches.NullOrEmpty ())
+                {
                     return true;
                 }
 
                 foreach (var bench in ResearchPalMod.allResearchBenches) {
-                    if (research.CanBeResearchedAt (bench, false)) {
-                        continue;
+                    if (research.CanBeResearchedAt (bench, false))
+                    {
+                        return false;
                     }
-                    return true;
                 }
 
-                return false;
+                return true;
             }
 
             return false;
