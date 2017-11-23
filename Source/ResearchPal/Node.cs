@@ -407,7 +407,7 @@ namespace ResearchPal
                     if (!Queue.IsQueued (this))
                     {
                         if (warnLocked) {
-                            Messages.Message (ResourceBank.String.RequireMissing, MessageSound.RejectInput);
+                            Messages.Message (ResourceBank.String.RequireMissing, MessageTypeDefOf.RejectInput);
                         }
 
                         // if shift is held, add to queue, otherwise replace queue

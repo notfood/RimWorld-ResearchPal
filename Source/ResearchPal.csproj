@@ -38,16 +38,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="0Harmony">
+      <HintPath>..\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\RimWorld1557Linux_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\Steam\steamapps\common\RimWorld\RimWorldLinux_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\RimWorld1557Linux_Data\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>..\Assemblies\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\..\Steam\steamapps\common\RimWorld\RimWorldLinux_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

@@ -174,11 +174,11 @@ namespace ResearchPal
             if (_queue.Count > 0) {
                 next = _queue.First ().Research;
                 text += "\n\nNext in queue: " + next.LabelCap;
-                letter = LetterDefOf.Good;
+                letter = LetterDefOf.PositiveEvent;
             } else {
                 next = null;
                 text += "\n\nNext in queue: none";
-                letter = LetterDefOf.BadNonUrgent;
+                letter = LetterDefOf.NegativeEvent;
             }
 
             Find.LetterStack.ReceiveLetter (label, text, letter);
