@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <BuildingResearchTree>Строительство исследовательского дерева</BuildingResearchTree>
+
+  <AllowsBuildingX>Разрешить строительство {0}.</AllowsBuildingX>
+  <AllowsCraftingX>Разрешить рецепты {0}.</AllowsCraftingX>
+  <AllowsSowingXinY>Разрешить посев {0} в {1}.</AllowsSowingXinY>
+
+  <LClickReplaceQueue>Щелкните левой кнопкой мыши, чтобы заменить очередь</LClickReplaceQueue>
+  <LClickRemoveFromQueue>Щелкните левой кнопкой мыши, чтобы удалить из очереди</LClickRemoveFromQueue>
+  <SLClickAddToQueue>Shift-Left-Click для добавления в очередь</SLClickAddToQueue>
+  <RClickForDetails>Щелкните правой кнопкой мыши, для деталей</RClickForDetails>
+
+  <RequiresThis>Требует</RequiresThis>
+  <LeadsTo>Приводит к</LeadsTo>
+
+  <ResearchLevels>{0} исследовано, ваш технический уровень {1}.</ResearchLevels>
+  <ResearchPenalty>Это будет стоить {0} больше времени, чтобы исследовать его.</ResearchPenalty>
+
+  <RequireMissing>Требования отсутствуют!</RequireMissing>
+  <RequireBenchLabel>Требует верстак:</RequireBenchLabel>
+  <RequireFacilityLabel>Требует построить:</RequireFacilityLabel>
+
+  <ResearchPal>ResearchPal</ResearchPal>
+  <ResearchPal.ShowNotificationPopup>Скрыть всплывающее уведомление</ResearchPal.ShowNotificationPopup>
+  <ResearchPal.ShowNotificationTip>Всякий раз, когда вы завершаете исследование, не показывать и показать уведомление по умолчанию.</ResearchPal.ShowNotificationTip>
+  <ResearchPal.ShouldPauseOnOpen>Пауза на экране</ResearchPal.ShouldPauseOnOpen>
+  <ResearchPal.ShouldPauseOnOpenTip>Всякий раз, игра должна приостанавливаться, когда отображается вкладка исследования.</ResearchPal.ShouldPauseOnOpenTip>
+
+</LanguageData>
