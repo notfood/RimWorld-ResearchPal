@@ -232,7 +232,7 @@ namespace ResearchPal
                 {
                     Queue<Node> nodes = new Queue<Node>(tree.NodesAtDepth(x));
                     List<Node> allNodesAtCurrentDepth = tree.NodesAtDepth(x, true);
-                    Dictionary<Node, int> switched = new Dictionary<Node, int>();
+                    List<Pair<Node, Node>> switched = new List<Pair<Node, Node>>();
 
                     while (nodes.Count > 0)
                     {
@@ -243,8 +243,8 @@ namespace ResearchPal
                                                                     !child.Tree.Trunk.Contains(child));
                         if (children.Count() > 0)
                         {
-                            // ideal position would be right next to top child, but we won't allow it to go out of tree bounds
-                            Node topChild = children.OrderBy(child => child.Pos.z).First();
+                            // ideal position would be right next to the nearest top child, but we won't allow it to go out of tree bounds
+                            Node topChild = children.OrderBy(child => child.Depth).ThenBy(child => child.Pos.z).First();
                             int bestPos = Math.Max(topChild.Pos.z, node.Tree.StartY + 1);
 
                             // keep checking until we have a decent position
@@ -255,24 +255,21 @@ namespace ResearchPal
                             // otherwise, check if position is taken by any node, or if the new position falls outside of tree bounds (exclude this node itself from matches)
                             while (allNodesAtCurrentDepth.Any(n => n.Pos.z == bestPos && n != node))
                             {
-                                // do we have a child at this location, and does the node at that position not have the same child?
+                                // do we have a child at this location, and does the node at that position not have the same child, and have we not already swapped these nodes?
                                 Node otherNode = allNodesAtCurrentDepth.First(n => n.Pos.z == bestPos && n != node);
                                 if (bestPos == topChild.Pos.z &&
-                                    !otherNode.Children.Contains(topChild))
+                                    !otherNode.Children.Contains(topChild) &&
+                                    !switched.Any(p => (p.First == node && p.Second == otherNode) || p.First == otherNode && p.Second == node)
+                                    )
                                 {
                                     // if not, switch the nodes and re-do the other node.
-                                    if (!switched.ContainsKey(node))
-                                    {
-                                        switched.Add(node, 0);
-                                    }
-                                    if (switched[node] < 5)
-                                    {
-                                        Log.Message("switched " + node.Research.LabelCap + "(" + node.Pos.z + ") and " + otherNode.Research.LabelCap + "(" + otherNode.Pos.z + ")");
-                                        otherNode.Pos.z = node.Pos.z;
-                                        nodes.Enqueue(otherNode);
-                                        switched[node]++;
-                                        continue;
-                                    }
+                                    Log.Message("switched " + node.Research.LabelCap + "(" + node.Pos.z + ") and " + otherNode.Research.LabelCap + "(" + otherNode.Pos.z + ")");
+
+                                    otherNode.Pos.z = node.Pos.z;
+                                    nodes.Enqueue(otherNode);
+                                    switched.Add(new Pair<Node, Node>(node, otherNode));
+
+                                    continue;
                                 }
                                 // or just bump it down otherwise
                                 bestPos++;
