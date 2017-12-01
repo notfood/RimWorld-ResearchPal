@@ -295,10 +295,7 @@ namespace ResearchPal
             int rootYOffset = 0;
 
             foreach (Node root in roots)
-            {
-                // set position
-                root.Pos = new IntVec2(root.Depth, curY + rootYOffset);
-
+            {                
                 // recursively go through all children
                 // width at depths
                 Dictionary<int, int> widthAtDepth = new Dictionary<int, int>();
@@ -330,11 +327,37 @@ namespace ResearchPal
                     }
                 }
 
-                // next root
+                // save max width
+                int maxWidth = 0;
                 if (widthAtDepth.Count > 0)
                 {
-                    rootYOffset += widthAtDepth.Select(p => p.Value).Max();
+                    maxWidth = widthAtDepth.Select(p => p.Value).Max();
                 }
+
+                int bestPos = curY + rootYOffset; // default position
+
+                // try to position the root beside the top child if there isn't already a node there
+                if (root.Children.Any())
+                {
+                    Node topChild = root.Children.OrderBy(child => child.Pos.z).First();                    
+                    if (!Trees.Any(t => t.NodesAtDepth(root.Depth, true).Any(n => n.Pos.z == topChild.Pos.z)))
+                    {                                                
+                        bestPos = topChild.Pos.z;
+                    }
+                }
+
+                // move any other roots sharing this position down by the depth
+                foreach (Node overlap in roots.Where(n => n.Pos.z == bestPos && n != root))
+                {
+                    //Log.Message("moving overlapping root node " + overlap.ToString() + " to " + new IntVec2(overlap.Pos.x, overlap.Pos.z + maxWidth).ToString() + " because it overlaps node " + root.ToString());
+                    overlap.Pos.z += maxWidth;
+                }
+
+                // set position of this root to the starting offset
+                root.Pos = new IntVec2(root.Depth, bestPos);
+
+                // increase the offset
+                rootYOffset += maxWidth;
             }
 
             // update orphan width for mini tree(s)
