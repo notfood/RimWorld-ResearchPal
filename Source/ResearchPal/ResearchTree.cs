@@ -232,7 +232,7 @@ namespace ResearchPal
                 {
                     Queue<Node> nodes = new Queue<Node>(tree.NodesAtDepth(x));
                     List<Node> allNodesAtCurrentDepth = tree.NodesAtDepth(x, true);
-                    Dictionary<Node, int> switched = new Dictionary<Node, int>();
+                    List<Pair<Node, Node>> switched = new List<Pair<Node, Node>>();
 
                     while (nodes.Count > 0)
                     {
@@ -243,8 +243,8 @@ namespace ResearchPal
                                                                     !child.Tree.Trunk.Contains(child));
                         if (children.Count() > 0)
                         {
-                            // ideal position would be right next to top child, but we won't allow it to go out of tree bounds
-                            Node topChild = children.OrderBy(child => child.Pos.z).First();
+                            // ideal position would be right next to the nearest top child, but we won't allow it to go out of tree bounds
+                            Node topChild = children.OrderBy(child => child.Depth).ThenBy(child => child.Pos.z).First();
                             int bestPos = Math.Max(topChild.Pos.z, node.Tree.StartY + 1);
 
                             // keep checking until we have a decent position
@@ -255,24 +255,21 @@ namespace ResearchPal
                             // otherwise, check if position is taken by any node, or if the new position falls outside of tree bounds (exclude this node itself from matches)
                             while (allNodesAtCurrentDepth.Any(n => n.Pos.z == bestPos && n != node))
                             {
-                                // do we have a child at this location, and does the node at that position not have the same child?
+                                // do we have a child at this location, and does the node at that position not have the same child, and have we not already swapped these nodes?
                                 Node otherNode = allNodesAtCurrentDepth.First(n => n.Pos.z == bestPos && n != node);
                                 if (bestPos == topChild.Pos.z &&
-                                    !otherNode.Children.Contains(topChild))
+                                    !otherNode.Children.Contains(topChild) &&
+                                    !switched.Any(p => (p.First == node && p.Second == otherNode) || p.First == otherNode && p.Second == node)
+                                    )
                                 {
                                     // if not, switch the nodes and re-do the other node.
-                                    if (!switched.ContainsKey(node))
-                                    {
-                                        switched.Add(node, 0);
-                                    }
-                                    if (switched[node] < 5)
-                                    {
-                                        Log.Message("switched " + node.Research.LabelCap + "(" + node.Pos.z + ") and " + otherNode.Research.LabelCap + "(" + otherNode.Pos.z + ")");
-                                        otherNode.Pos.z = node.Pos.z;
-                                        nodes.Enqueue(otherNode);
-                                        switched[node]++;
-                                        continue;
-                                    }
+                                    Log.Message("switched " + node.Research.LabelCap + "(" + node.Pos.z + ") and " + otherNode.Research.LabelCap + "(" + otherNode.Pos.z + ")");
+
+                                    otherNode.Pos.z = node.Pos.z;
+                                    nodes.Enqueue(otherNode);
+                                    switched.Add(new Pair<Node, Node>(node, otherNode));
+
+                                    continue;
                                 }
                                 // or just bump it down otherwise
                                 bestPos++;
@@ -295,10 +292,7 @@ namespace ResearchPal
             int rootYOffset = 0;
 
             foreach (Node root in roots)
-            {
-                // set position
-                root.Pos = new IntVec2(root.Depth, curY + rootYOffset);
-
+            {                
                 // recursively go through all children
                 // width at depths
                 Dictionary<int, int> widthAtDepth = new Dictionary<int, int>();
@@ -330,11 +324,37 @@ namespace ResearchPal
                     }
                 }
 
-                // next root
+                // save max width
+                int maxWidth = 0;
                 if (widthAtDepth.Count > 0)
                 {
-                    rootYOffset += widthAtDepth.Select(p => p.Value).Max();
+                    maxWidth = widthAtDepth.Select(p => p.Value).Max();
                 }
+
+                int bestPos = curY + rootYOffset; // default position
+
+                // try to position the root beside the top child if there isn't already a node there
+                if (root.Children.Any())
+                {
+                    Node topChild = root.Children.OrderBy(child => child.Pos.z).First();                    
+                    if (!Trees.Any(t => t.NodesAtDepth(root.Depth, true).Any(n => n.Pos.z == topChild.Pos.z)))
+                    {                                                
+                        bestPos = topChild.Pos.z;
+                    }
+                }
+
+                // move any other roots sharing this position down by the depth
+                foreach (Node overlap in roots.Where(n => n.Pos.z == bestPos && n != root))
+                {
+                    //Log.Message("moving overlapping root node " + overlap.ToString() + " to " + new IntVec2(overlap.Pos.x, overlap.Pos.z + maxWidth).ToString() + " because it overlaps node " + root.ToString());
+                    overlap.Pos.z += maxWidth;
+                }
+
+                // set position of this root to the starting offset
+                root.Pos = new IntVec2(root.Depth, bestPos);
+
+                // increase the offset
+                rootYOffset += maxWidth;
             }
 
             // update orphan width for mini tree(s)
