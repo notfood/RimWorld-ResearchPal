@@ -422,23 +422,19 @@ namespace ResearchPal
                             if (!n.Research.IsFinished)
                                 Find.ResearchManager.InstantFinish(n.Research, false);
                         }
-                    }
-                    else
-                    {
+                    } else {
 
-                    if (!Queue.IsQueued (this))
-                    {
-                        if (warnLocked) {
-                            Messages.Message (ResourceBank.String.RequireMissing, MessageTypeDefOf.RejectInput);
+                        if (!Queue.IsQueued (this))
+                        {
+                            if (warnLocked) {
+                                Messages.Message (ResourceBank.String.RequireMissing, MessageTypeDefOf.RejectInput);
+                            }
+
+                            // if shift is held, add to queue, otherwise replace queue
+                            Queue.EnqueueRange (GetMissingRequiredRecursive ().Concat (new List<Node> (new [] { this })), Event.current.shift);
+                        } else {
+                            Queue.Dequeue(this);
                         }
-
-                        // if shift is held, add to queue, otherwise replace queue
-                        Queue.EnqueueRange (GetMissingRequiredRecursive ().Concat (new List<Node> (new [] { this })), Event.current.shift);
-                    }
-                    else
-                    {
-                        Queue.Dequeue(this);
-                    }
                     }
 
                 } else if (Event.current.button == 1) {
