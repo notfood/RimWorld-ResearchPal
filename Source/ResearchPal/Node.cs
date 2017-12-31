@@ -349,7 +349,14 @@ namespace ResearchPal
             Text.Anchor = TextAnchor.UpperLeft;
             Text.WordWrap = true;
             Text.Font = _largeLabel ? GameFont.Tiny : GameFont.Small;
-            Widgets.Label(LabelRect, Research.LabelCap);
+            if (Prefs.DevMode)
+            {
+                Widgets.Label(LabelRect, this.ToString());
+            }
+            else
+            {
+                Widgets.Label(LabelRect, Research.LabelCap);
+            }
 
             // draw research cost and icon
             Text.Anchor = TextAnchor.UpperRight;
@@ -404,6 +411,21 @@ namespace ResearchPal
                 // LMB is queue operations, RMB is info
                 if (Event.current.button == 0 && !Research.IsFinished)
                 {
+                    if (Prefs.DevMode && Event.current.control)
+                    {
+                        List<Node> nodesToResearch = GetMissingRequiredRecursive().Concat(new List<Node>(new[] { this })).ToList();                        
+                        foreach (Node n in nodesToResearch)
+                        {
+                            if (Queue.IsQueued(n))
+                                Queue.Dequeue(n);
+
+                            if (!n.Research.IsFinished)
+                                Find.ResearchManager.InstantFinish(n.Research, false);
+                        }
+                    }
+                    else
+                    {
+
                     if (!Queue.IsQueued (this))
                     {
                         if (warnLocked) {
@@ -417,6 +439,8 @@ namespace ResearchPal
                     {
                         Queue.Dequeue(this);
                     }
+                    }
+
                 } else if (Event.current.button == 1) {
                     ResearchPalMod.JumpToHelp (Research);
                 }
@@ -568,7 +592,7 @@ namespace ResearchPal
         /// <returns>string description</returns>
         private string GetResearchTooltipString()
         {
-            // start with the descripton
+            // start with the description
             var text = new StringBuilder();
             text.AppendLine(Research.description);
             text.AppendLine();
@@ -591,6 +615,9 @@ namespace ResearchPal
                     text.AppendLine(ResourceBank.String.RequireFacilityLabel + " " + rrf.label);
                 }
             }
+
+            text.AppendLine();
+
             if (Queue.IsQueued(this))
             {
                 text.AppendLine(ResourceBank.String.LClickRemoveFromQueue);
@@ -599,6 +626,11 @@ namespace ResearchPal
             {
                 text.AppendLine(ResourceBank.String.LClickReplaceQueue);
                 text.AppendLine(ResourceBank.String.SLClickAddToQueue);
+            }
+
+            if (Prefs.DevMode)
+            {
+                text.AppendLine(ResourceBank.String.CLClickDebugInstant);
             }
 
             //To Help System

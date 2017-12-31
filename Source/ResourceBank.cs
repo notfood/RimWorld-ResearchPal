@@ -17,6 +17,7 @@ namespace ResearchPal
             public static readonly string LClickReplaceQueue = "LClickReplaceQueue".Translate ();
             public static readonly string SLClickAddToQueue = "SLClickAddToQueue".Translate ();
             public static readonly string RClickForDetails = "RClickForDetails".Translate ();
+            public static readonly string CLClickDebugInstant = "CLClickDebugInstant".Translate();
 
             public static readonly string LeadsTo = "LeadsTo".Translate ();
             public static readonly string RequiresThis = "RequiresThis".Translate ();
