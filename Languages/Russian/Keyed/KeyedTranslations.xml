@@ -10,6 +10,7 @@
   <LClickReplaceQueue>Щелкните левой кнопкой мыши, чтобы заменить очередь</LClickReplaceQueue>
   <LClickRemoveFromQueue>Щелкните левой кнопкой мыши, чтобы удалить из очереди</LClickRemoveFromQueue>
   <SLClickAddToQueue>Shift-Left-Click для добавления в очередь</SLClickAddToQueue>
+  <CLClickDebugInstant>Ctrl-Left-Click чтобы мгновенно завершить</CLClickDebugInstant>
   <RClickForDetails>Щелкните правой кнопкой мыши, для деталей</RClickForDetails>
 
   <RequiresThis>Требует</RequiresThis>
