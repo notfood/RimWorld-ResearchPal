@@ -23,6 +23,8 @@
   <RequireBenchLabel>Require bench:</RequireBenchLabel>
   <RequireFacilityLabel>Require facility:</RequireFacilityLabel>
   
+  <SearchPlaceholder>Filter</SearchPlaceholder>
+  
   <ResearchPal>ResearchPal</ResearchPal>
   <ResearchPal.ShowNotificationPopup>Hide Notification Popup</ResearchPal.ShowNotificationPopup>
   <ResearchPal.ShowNotificationTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationTip>

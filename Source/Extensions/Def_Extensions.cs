@@ -34,9 +34,9 @@ namespace ResearchPal
             return def.LabelCap;
         }
 
-        public static void DrawColouredIcon(this Def def, Rect canvas)
+        public static void DrawColouredIcon(this Def def, Rect canvas, float alpha = 1.0f)
         {
-            GUI.color = def.IconColor();
+            GUI.color = alpha == 1.0f ? def.IconColor() : new Color(def.IconColor().r, def.IconColor().g, def.IconColor().b, alpha);
             GUI.DrawTexture(canvas, def.IconTexture(), ScaleMode.ScaleToFit);
             GUI.color = Color.white;
         }

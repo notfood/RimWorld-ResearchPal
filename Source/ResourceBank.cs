@@ -17,7 +17,7 @@ namespace ResearchPal
             public static readonly string LClickReplaceQueue = "LClickReplaceQueue".Translate ();
             public static readonly string SLClickAddToQueue = "SLClickAddToQueue".Translate ();
             public static readonly string RClickForDetails = "RClickForDetails".Translate ();
-            public static readonly string CLClickDebugInstant = "CLClickDebugInstant".Translate();
+            public static readonly string CLClickDebugInstant = "CLClickDebugInstant".Translate ();
 
             public static readonly string LeadsTo = "LeadsTo".Translate ();
             public static readonly string RequiresThis = "RequiresThis".Translate ();
@@ -26,6 +26,8 @@ namespace ResearchPal
             public static readonly string ShowNotificationTip = "ResearchPal.ShowNotificationTip".Translate ();
             public static readonly string ShouldPauseOnOpen = "ResearchPal.ShouldPauseOnOpen".Translate ();
             public static readonly string ShouldPauseOnOpenTip = "ResearchPal.ShouldPauseOnOpenTip".Translate ();
+
+            public static readonly string SearchPlaceholder = "SearchPlaceholder".Translate ();
 
             public static string ResearchFinished(string label)
             {

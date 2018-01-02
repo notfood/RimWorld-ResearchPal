@@ -23,6 +23,8 @@
   <RequireBenchLabel>Требует верстак:</RequireBenchLabel>
   <RequireFacilityLabel>Требует построить:</RequireFacilityLabel>
 
+  <SearchPlaceholder>фильтровать</SearchPlaceholder>
+
   <ResearchPal>ResearchPal</ResearchPal>
   <ResearchPal.ShowNotificationPopup>Скрыть всплывающее уведомление</ResearchPal.ShowNotificationPopup>
   <ResearchPal.ShowNotificationTip>Всякий раз, когда вы завершаете исследование, не показывать и показать уведомление по умолчанию.</ResearchPal.ShowNotificationTip>

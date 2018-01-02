@@ -39,6 +39,7 @@ namespace ResearchPal
 
         private bool _rectSet;
         private Vector2 _right = Vector2.zero;
+        private int isFilterMatch = -1;        
 
         #endregion Fields
 
@@ -133,7 +134,7 @@ namespace ResearchPal
                 if (_left == Vector2.zero)
                 {
                     _left = new Vector2(Pos.x * (Settings.NodeSize.x + Settings.NodeMargins.x) + Offset,
-                                         Pos.z * (Settings.NodeSize.y + Settings.NodeMargins.y) + Offset + Settings.NodeSize.y / 2);
+                                         (Pos.z-1) * (Settings.NodeSize.y + Settings.NodeMargins.y) + Offset + Settings.NodeSize.y / 2);
                 }
                 return _left;
             }
@@ -179,9 +180,20 @@ namespace ResearchPal
                 if (_right == Vector2.zero)
                 {
                     _right = new Vector2(Pos.x * (Settings.NodeSize.x + Settings.NodeMargins.x) + Offset + Settings.NodeSize.x,
-                                          Pos.z * (Settings.NodeSize.y + Settings.NodeMargins.y) + Offset + Settings.NodeSize.y / 2);
+                                          (Pos.z-1) * (Settings.NodeSize.y + Settings.NodeMargins.y) + Offset + Settings.NodeSize.y / 2);
                 }
                 return _right;
+            }
+        }
+
+        /// <summary>
+        /// True if this node is a match for the current filter phrase
+        /// </summary>
+        public bool FilterMatch
+        {
+            get
+            {
+                return (isFilterMatch == 1);
             }
         }
 
@@ -282,12 +294,66 @@ namespace ResearchPal
             text.AppendLine("");
             Log.Message(text.ToString());
         }
+        
+        /// <summary>
+        /// Adjusts the alpha channel of the color passed in for filtering
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="alpha"></param>
+        /// <returns></returns>
+        public Color AdjustFilterAlpha(Color col, float alpha = 0.1f)
+        {
+            if (isFilterMatch == 0)
+            {
+                return new Color(GUI.color.r, GUI.color.b, GUI.color.b, alpha);
+            } else {
+                return col;
+            }            
+        }
+
+        /// <summary>
+        /// Returns an alpha level based on whether or not the node is highlighted in the current filter
+        /// </summary>
+        /// <returns></returns>
+        private float NodeAlpha()
+        {
+            return (isFilterMatch == 0 ? 0.1f : 1.0f);
+        }
+
+        private void CheckFilter(List<Pair<Def, string>> unlocks)
+        {
+            if (!MainTabWindow_ResearchTree.FilterChanged)
+                return;
+
+            string phrase = MainTabWindow_ResearchTree.FilterPhrase.Trim();
+            if (phrase != "")
+            {
+                // look for matching research or matching recipes
+                if (Research.label.Contains(phrase, StringComparison.InvariantCultureIgnoreCase)
+                    || (unlocks != null && unlocks.Any(recipe => recipe.First.label.Contains(phrase, StringComparison.InvariantCulture)))
+                    )
+                {
+                    isFilterMatch = 1;
+                } else {
+                    isFilterMatch = 0;
+                }
+            } else {
+                isFilterMatch = -1;
+            }
+        }
 
         /// <summary>
         /// Draw the node, including interactions.
         /// </summary>
-        public void Draw()
+        public bool Draw()
         {
+
+            // get unlocks immediately for filter settings
+            List<Pair<Def, string>> unlocks = Research.GetUnlockDefsAndDescs();
+
+            // reset search check
+            CheckFilter(unlocks);
+
             // cop out if off-screen
             Rect screen = new Rect(MainTabWindow_ResearchTree._scrollPosition.x, MainTabWindow_ResearchTree._scrollPosition.y, Screen.width, Screen.height - 35);
             if (Rect.xMin > screen.xMax ||
@@ -295,11 +361,11 @@ namespace ResearchPal
                 Rect.yMin > screen.yMax ||
                 Rect.yMax < screen.yMin)
             {
-                return;
+                return false;
             }
 
             // set color
-            GUI.color = !Research.PrerequisitesCompleted ? Tree.GreyedColor : Tree.MediumColor;
+            GUI.color = !Research.PrerequisitesCompleted ? AdjustFilterAlpha(Tree.GreyedColor) : AdjustFilterAlpha(Tree.MediumColor);
 
             // mouseover highlights
             if (Mouse.IsOver(Rect))
@@ -326,6 +392,12 @@ namespace ResearchPal
                     }
                 }
             }
+            // filter highlight
+            else if (isFilterMatch == 1)
+            {
+                GUI.DrawTexture(Rect, ResearchTree.ButtonActive);
+                Highlight(GenUI.MouseoverColor, false, false);
+            }
             // if not moused over, just draw the default button state
             else
             {
@@ -336,7 +408,7 @@ namespace ResearchPal
             bool warnLocked = false, warnPenalty = false;
             if (!Research.IsFinished) {
                 Rect progressBarRect = Rect.ContractedBy (2f);
-                GUI.color = Tree.GreyedColor;
+                GUI.color = AdjustFilterAlpha(Tree.GreyedColor);
                 progressBarRect.xMin += Research.ProgressPercent * progressBarRect.width;
                 GUI.DrawTexture (progressBarRect, BaseContent.WhiteTex);
 
@@ -345,13 +417,13 @@ namespace ResearchPal
             }
 
             // draw the research label
-            GUI.color = Color.white;
+            GUI.color = AdjustFilterAlpha(Color.white);
             Text.Anchor = TextAnchor.UpperLeft;
             Text.WordWrap = true;
             Text.Font = _largeLabel ? GameFont.Tiny : GameFont.Small;
             if (Prefs.DevMode)
             {
-                Widgets.Label(LabelRect, this.ToString());
+                Widgets.Label(LabelRect, Research.LabelCap + " (" + Depth + ", " + Genus + ", " + Family + "):");
             }
             else
             {
@@ -362,11 +434,11 @@ namespace ResearchPal
             Text.Anchor = TextAnchor.UpperRight;
             Text.Font = GameFont.Small;
             if (warnPenalty) {
-                GUI.color = Color.yellow;
+                GUI.color = AdjustFilterAlpha(Color.yellow);
             }
             Widgets.Label (CostLabelRect, Research.CostApparent.ToStringByStyle (ToStringStyle.Integer));
 
-            GUI.color = Color.white;
+            GUI.color = AdjustFilterAlpha(Color.white);
             if (warnLocked) {
                 GUI.DrawTexture (CostIconRect, WarningIcon);
             } else {
@@ -378,8 +450,7 @@ namespace ResearchPal
             // attach description and further info to a tooltip
             TooltipHandler.TipRegion(Rect, GetResearchTooltipString()); // new TipSignal( GetResearchTooltipString(), Settings.TipID ) );
 
-            // draw unlock icons
-            List<Pair<Def, string>> unlocks = Research.GetUnlockDefsAndDescs();
+            // draw unlock icons            
             for (int i = 0; i < unlocks.Count; i++)
             {
                 Rect iconRect = new Rect(IconsRect.xMax - (i + 1) * (Settings.IconSize.x + 4f),
@@ -392,14 +463,14 @@ namespace ResearchPal
                 {
                     // stop the loop if we're about to overflow and have 2 or more unlocks yet to print.
                     iconRect.x = IconsRect.x + 4f;
-                    ResearchTree.MoreIcon.DrawFittedIn(iconRect);
+                    ResearchTree.MoreIcon.DrawFittedIn(iconRect, NodeAlpha());
                     string tip = string.Join("\n", unlocks.GetRange(i, unlocks.Count - i).Select(p => p.Second).ToArray());
                     TooltipHandler.TipRegion(iconRect, tip); // new TipSignal( tip, Settings.TipID, TooltipPriority.Pawn ) );
                     break;
                 }
 
                 // draw icon
-                unlocks[i].First.DrawColouredIcon(iconRect);
+                unlocks[i].First.DrawColouredIcon(iconRect, NodeAlpha());
 
                 // tooltip
                 TooltipHandler.TipRegion(iconRect, unlocks[i].Second); // new TipSignal( unlocks[i].Second, Settings.TipID, TooltipPriority.Pawn ) );
@@ -441,6 +512,7 @@ namespace ResearchPal
                     ResearchPalMod.JumpToHelp (Research);
                 }
             }
+            return true;
         }
 
         private bool IsLocked (ResearchProjectDef research)
@@ -541,7 +613,7 @@ namespace ResearchPal
         {
             // main rect
             _rect = new Rect(Pos.x * (Settings.NodeSize.x + Settings.NodeMargins.x) + Offset,
-                              Pos.z * (Settings.NodeSize.y + Settings.NodeMargins.y) + Offset,
+                              (Pos.z-1) * (Settings.NodeSize.y + Settings.NodeMargins.y) + Offset,
                               Settings.NodeSize.x,
                               Settings.NodeSize.y);
 
@@ -632,6 +704,13 @@ namespace ResearchPal
             //To Help System
             if (ResearchPalMod.HasHelpTreeLoaded) {
                 text.AppendLine (ResourceBank.String.RClickForDetails);
+            }
+
+            if (Prefs.DevMode)
+            {
+                text.AppendLine();
+                text.Append("Position: " + this.Pos.ToString());
+                text.Append("Rect: " + this.Rect.ToString());
             }
 
             return text.ToString();

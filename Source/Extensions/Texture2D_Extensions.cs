@@ -19,11 +19,12 @@ namespace ResearchPal
             return tex;
         }
 
-        public static void DrawFittedIn(this Texture2D tex, Rect rect)
+        public static void DrawFittedIn(this Texture2D tex, Rect rect, float alpha = 1.0f)
         {
             float rectProportion = (float)rect.width / (float)rect.height;
             float texProportion = (float)tex.width / (float)tex.height;
 
+            GUI.color = new Color(1.0f, 1.0f, 1.0f, alpha);
             if (texProportion > rectProportion)
             {
                 Rect wider = new Rect(rect.xMin, 0f, rect.width, rect.width / texProportion).CenteredOnYIn(rect).CenteredOnXIn(rect);
