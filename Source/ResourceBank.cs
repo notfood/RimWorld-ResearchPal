@@ -23,9 +23,11 @@ namespace ResearchPal
             public static readonly string RequiresThis = "RequiresThis".Translate ();
 
             public static readonly string ShowNotificationPopup = "ResearchPal.ShowNotificationPopup".Translate ();
-            public static readonly string ShowNotificationTip = "ResearchPal.ShowNotificationTip".Translate ();
+            public static readonly string ShowNotificationPopupTip = "ResearchPal.ShowNotificationPopupTip".Translate ();
             public static readonly string ShouldPauseOnOpen = "ResearchPal.ShouldPauseOnOpen".Translate ();
             public static readonly string ShouldPauseOnOpenTip = "ResearchPal.ShouldPauseOnOpenTip".Translate ();
+            public static readonly string DebugResearch = "ResearchPal.DebugResearch".Translate ();
+            public static readonly string DebugResearchTip = "ResearchPal.DebugResearchTip".Translate ();
 
             public static string ResearchFinished(string label)
             {

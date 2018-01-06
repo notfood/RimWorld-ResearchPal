@@ -14,6 +14,7 @@ namespace ResearchPal
 
         public static bool   showNotification   = true;
         public static bool   shouldPause        = false;
+        public static bool   debugResearch      = false;
 
         #endregion tuning parameters
 
@@ -35,9 +36,11 @@ namespace ResearchPal
             list.Begin (rect);
 
             list.CheckboxLabeled (ResourceBank.String.ShowNotificationPopup, ref showNotification,
-                                  ResourceBank.String.ShowNotificationTip);
+                                  ResourceBank.String.ShowNotificationPopupTip);
             list.CheckboxLabeled (ResourceBank.String.ShouldPauseOnOpen, ref shouldPause,
                                   ResourceBank.String.ShouldPauseOnOpenTip);
+            list.CheckboxLabeled (ResourceBank.String.DebugResearch, ref debugResearch,
+                                  ResourceBank.String.DebugResearchTip);
 
             list.End ();
         }
@@ -47,6 +50,7 @@ namespace ResearchPal
             base.ExposeData ();
             Scribe_Values.Look (ref showNotification, "ShowNotificationPopup", true);
             Scribe_Values.Look (ref shouldPause, "ShouldPauseOnOpen", false);
+            Scribe_Values.Look (ref debugResearch, "DebugResearch", false);
         }
     }
 }

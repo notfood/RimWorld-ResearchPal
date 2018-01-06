@@ -349,7 +349,7 @@ namespace ResearchPal
             Text.Anchor = TextAnchor.UpperLeft;
             Text.WordWrap = true;
             Text.Font = _largeLabel ? GameFont.Tiny : GameFont.Small;
-            if (Prefs.DevMode)
+            if (Settings.debugResearch && Prefs.DevMode)
             {
                 Widgets.Label(LabelRect, this.ToString());
             }
@@ -411,7 +411,7 @@ namespace ResearchPal
                 // LMB is queue operations, RMB is info
                 if (Event.current.button == 0 && !Research.IsFinished)
                 {
-                    if (Prefs.DevMode && Event.current.control)
+                    if (Settings.debugResearch && Prefs.DevMode && Event.current.control)
                     {
                         List<Node> nodesToResearch = GetMissingRequiredRecursive().Concat(new List<Node>(new[] { this })).ToList();                        
                         foreach (Node n in nodesToResearch)
@@ -422,6 +422,8 @@ namespace ResearchPal
                             if (!n.Research.IsFinished)
                                 Find.ResearchManager.InstantFinish(n.Research, false);
                         }
+
+                        Verse.Sound.SoundStarter.PlayOneShotOnCamera (MessageTypeDefOf.PositiveEvent.sound);
                     } else {
 
                         if (!Queue.IsQueued (this))
@@ -624,7 +626,7 @@ namespace ResearchPal
                 text.AppendLine(ResourceBank.String.SLClickAddToQueue);
             }
 
-            if (Prefs.DevMode)
+            if (Settings.debugResearch && Prefs.DevMode)
             {
                 text.AppendLine(ResourceBank.String.CLClickDebugInstant);
             }
