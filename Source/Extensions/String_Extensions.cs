@@ -8,5 +8,13 @@ namespace ResearchPal
         {
             return source?.IndexOf(toCheck, comp) >= 0;
         }
+
+        public static string TitleCase(this String input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(input);
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace ResearchPal
 
         private bool _rectSet;
         private Vector2 _right = Vector2.zero;
-        private int isFilterMatch = -1;        
+        private FilterManager.FilterMatchType _matchType = FilterManager.FilterMatchType.NONE;        
 
         #endregion Fields
 
@@ -187,15 +187,19 @@ namespace ResearchPal
         }
 
         /// <summary>
-        /// True if this node is a match for the current filter phrase
+        /// Type of match to the current filter
         /// </summary>
-        public bool FilterMatch
+        public FilterManager.FilterMatchType FilterMatch
         {
             get
             {
-                return (isFilterMatch == 1);
+                return _matchType;
             }
-        }
+            set
+            {
+                _matchType = value;
+            }
+        }        
 
         #endregion Properties
 
@@ -303,7 +307,7 @@ namespace ResearchPal
         /// <returns></returns>
         public Color AdjustFilterAlpha(Color col, float alpha = 0.1f)
         {
-            if (isFilterMatch == 0)
+            if (_matchType == FilterManager.FilterMatchType.NO_MATCH)
             {
                 return new Color(GUI.color.r, GUI.color.b, GUI.color.b, alpha);
             } else {
@@ -317,29 +321,7 @@ namespace ResearchPal
         /// <returns></returns>
         private float NodeAlpha()
         {
-            return (isFilterMatch == 0 ? 0.1f : 1.0f);
-        }
-
-        private void CheckFilter(List<Pair<Def, string>> unlocks)
-        {
-            if (!MainTabWindow_ResearchTree.FilterChanged)
-                return;
-
-            string phrase = MainTabWindow_ResearchTree.FilterPhrase.Trim();
-            if (phrase != "")
-            {
-                // look for matching research or matching recipes
-                if (Research.label.Contains(phrase, StringComparison.InvariantCultureIgnoreCase)
-                    || (unlocks != null && unlocks.Any(recipe => recipe.First.label.Contains(phrase, StringComparison.InvariantCulture)))
-                    )
-                {
-                    isFilterMatch = 1;
-                } else {
-                    isFilterMatch = 0;
-                }
-            } else {
-                isFilterMatch = -1;
-            }
+            return (_matchType == FilterManager.FilterMatchType.NO_MATCH ? 0.1f : 1.0f);
         }
 
         /// <summary>
@@ -347,13 +329,6 @@ namespace ResearchPal
         /// </summary>
         public bool Draw()
         {
-
-            // get unlocks immediately for filter settings
-            List<Pair<Def, string>> unlocks = Research.GetUnlockDefsAndDescs();
-
-            // reset search check
-            CheckFilter(unlocks);
-
             // cop out if off-screen
             Rect screen = new Rect(MainTabWindow_ResearchTree._scrollPosition.x, MainTabWindow_ResearchTree._scrollPosition.y, Screen.width, Screen.height - 35);
             if (Rect.xMin > screen.xMax ||
@@ -376,12 +351,7 @@ namespace ResearchPal
                 // highlight this and all prerequisites if research not completed
                 if (!Research.IsFinished)
                 {
-                    List<Node> prereqs = GetMissingRequiredRecursive();
-                    Highlight(GenUI.MouseoverColor, true, false);
-                    foreach (Node prerequisite in prereqs)
-                    {
-                        prerequisite.Highlight(GenUI.MouseoverColor, true, false);
-                    }
+                    HighlightWithPrereqs();
                 }
                 else // highlight followups
                 {
@@ -392,11 +362,16 @@ namespace ResearchPal
                     }
                 }
             }
-            // filter highlight
-            else if (isFilterMatch == 1)
+            // filter highlights
+            else if (_matchType > FilterManager.FilterMatchType.NO_MATCH)
             {
                 GUI.DrawTexture(Rect, ResearchTree.ButtonActive);
-                Highlight(GenUI.MouseoverColor, false, false);
+                if (Settings.showFilteredLinks)
+                {
+                    HighlightWithPrereqs();
+                } else {
+                    Highlight(GenUI.MouseoverColor, false, false);
+                }                                               
             }
             // if not moused over, just draw the default button state
             else
@@ -450,7 +425,8 @@ namespace ResearchPal
             // attach description and further info to a tooltip
             TooltipHandler.TipRegion(Rect, GetResearchTooltipString()); // new TipSignal( GetResearchTooltipString(), Settings.TipID ) );
 
-            // draw unlock icons            
+            // draw unlock icons
+            List<Pair<Def, string>> unlocks = Research.GetUnlockDefsAndDescs();
             for (int i = 0; i < unlocks.Count; i++)
             {
                 Rect iconRect = new Rect(IconsRect.xMax - (i + 1) * (Settings.IconSize.x + 4f),
@@ -513,6 +489,16 @@ namespace ResearchPal
                 }
             }
             return true;
+        }
+
+        private void HighlightWithPrereqs()
+        {
+            List<Node> prereqs = GetMissingRequiredRecursive();
+            Highlight(GenUI.MouseoverColor, true, false);
+            foreach (Node prerequisite in prereqs)
+            {
+                prerequisite.Highlight(GenUI.MouseoverColor, true, false);
+            }
         }
 
         private bool IsLocked (ResearchProjectDef research)
@@ -663,6 +649,9 @@ namespace ResearchPal
             // start with the description
             var text = new StringBuilder();
             text.AppendLine(Research.description);
+            text.AppendLine();
+
+            text.AppendLine(StringExtensions.TitleCase(Research.techLevel.ToStringHuman()));
             text.AppendLine();
 
             var PlayerTechLevel = Faction.OfPlayer.def.techLevel;

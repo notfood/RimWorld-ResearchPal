@@ -23,12 +23,19 @@
   <RequireBenchLabel>Require bench:</RequireBenchLabel>
   <RequireFacilityLabel>Require facility:</RequireFacilityLabel>
   
-  <SearchPlaceholder>Filter</SearchPlaceholder>
+  <FilterTitleResearch>Research Projects:</FilterTitleResearch>
+  <FilterTitleUnlocks>Unlocks:</FilterTitleUnlocks>
+  <FilterTitleTechLevel>Tech Level:</FilterTitleTechLevel>
+  <FilterResults>{0} Results Found.</FilterResults>
   
   <ResearchPal>ResearchPal</ResearchPal>
   <ResearchPal.ShowNotificationPopup>Hide Notification Popup</ResearchPal.ShowNotificationPopup>
   <ResearchPal.ShowNotificationTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationTip>
   <ResearchPal.ShouldPauseOnOpen>Pause on Display</ResearchPal.ShouldPauseOnOpen>
   <ResearchPal.ShouldPauseOnOpenTip>Whenever the game should pause when the research tab is displayed.</ResearchPal.ShouldPauseOnOpenTip>
+  <ResearchPal.ShouldResetOnOpen>Reset on Display</ResearchPal.ShouldResetOnOpen>
+  <ResearchPal.ShouldResetOnOpenTip>Clear filtering and reset scroll position.</ResearchPal.ShouldResetOnOpenTip>
+  <ResearchPal.ShowFilteredLinks>Highlight Filtered Prerequisites</ResearchPal.ShowFilteredLinks>
+  <ResearchPal.ShowFilteredLinksTip>Highlight the prerequisite research for filtered matches.</ResearchPal.ShowFilteredLinksTip>
 
 </LanguageData>

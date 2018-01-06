@@ -11,24 +11,13 @@ namespace ResearchPal
     public class MainTabWindow_ResearchTree : MainTabWindow
     {
         internal static Vector2 _scrollPosition                     = Vector2.zero;
-        private static float filterHeight                           = 30f;
 
         public static List<Pair<Node, Node>> connections            = new List<Pair<Node, Node>>();
         public static List<Pair<Node, Node>> highlightedConnections = new List<Pair<Node, Node>>();
         public static Dictionary<Rect, List<String>> hubTips        = new Dictionary<Rect, List<string>>();
         public static List<Node> nodes                              = new List<Node>();
-        public static string FilterPhrase                           = "";
-        public static string LastFilterPhrase                       = "";
-
-        public static bool FilterChanged
-        {
-            get
-            {
-                return (FilterPhrase != LastFilterPhrase);
-            }
-
-        }            
-
+        public static FilterManager filterManager                   = new FilterManager();
+        
         public override Vector2 RequestedTabSize {
             get {
                 return new Vector2 (UI.screenWidth, UI.screenHeight);
@@ -51,44 +40,55 @@ namespace ResearchPal
                 this.forcePause = Settings.shouldPause;
             }
 
-            // clear the filter each time the tree is opened
-            FilterPhrase = "";
+            if (Settings.shouldReset)
+            {
+                filterManager.Reset();
+            }            
+
+        }
+
+        public override void WindowOnGUI()
+        {
+            base.WindowOnGUI();
+            filterManager.CheckPressedKey();            
         }
 
         public override void DoWindowContents( Rect canvas )
         {
+            filterManager.DrawFilterControls(canvas);
+
             PrepareTreeForDrawing();
             DrawTree( canvas );
-        }
 
+            filterManager.DrawFilterResults(canvas);
+        }
+               
         private void PrepareTreeForDrawing()
         {
+            
             // loop through trees
             foreach ( Tree tree in ResearchTree.Trees )
             {
-                foreach ( Node node in tree.Trunk.Concat( tree.Leaves ) )
-                {
-                    nodes.Add( node );
-
-                    foreach ( Node parent in node.Parents )
-                    {
-                        connections.Add( new Pair<Node, Node>( node, parent ) );
-                    }
-                }
+                PrepareNodes(tree.Trunk.Concat(tree.Leaves));
             }
 
             // add orphans
-            foreach ( Node node in ResearchTree.Orphans.Leaves )
-            {
-                nodes.Add( node );
+            PrepareNodes(ResearchTree.Orphans.Leaves);
+        }
 
-                foreach ( Node parent in node.Parents )
+        private void PrepareNodes(IEnumerable<Node> nodeList)
+        {
+            foreach (Node node in nodeList)
+            {
+                nodes.Add(node);
+                filterManager.NodeIsMatch(node);
+
+                foreach (Node parent in node.Parents)
                 {
-                    connections.Add( new Pair<Node, Node>( node, parent ) );
+                    connections.Add(new Pair<Node, Node>(node, parent));
                 }
             }
         }
-
 
         public void DrawTree( Rect canvas )
         {
@@ -103,25 +103,7 @@ namespace ResearchPal
 
             maxDepth = Math.Max( maxDepth, ResearchTree.Orphans.MaxDepth );
             totalWidth += ResearchTree.Orphans.Width;
-
-            // add an area at the top for filtering
-            Rect rectFilter = new Rect(canvas.xMin, canvas.yMin, canvas.width / 6.0f, filterHeight);
-
-            // add a button beside that for clearing the filter phrase
-            Rect rectClear = new Rect(rectFilter.xMax + 3f, canvas.yMin + 3f, 24f, 24f);
-
-            // add a text widget with the current filter phrase
-            LastFilterPhrase = FilterPhrase;
-            FilterPhrase = Widgets.TextField(rectFilter, FilterPhrase);
-
-            // if there's no filter, show a label with the default search keyword
-            if (FilterPhrase.NullOrEmpty())
-            {
-                Widgets.Label(new Rect(rectFilter.x + 6f, rectFilter.y + 3f, rectFilter.width, rectFilter.height), ResourceBank.String.SearchPlaceholder);
-            } else if (Widgets.ButtonImage(rectClear, Widgets.CheckboxOffTex)) {
-                FilterPhrase = "";                
-            }            
-
+                   
             float width = ( maxDepth + 1 ) * ( Settings.NodeSize.x + Settings.NodeMargins.x ); // zero based
             float height = ( totalWidth - 1 ) * (Settings.NodeSize.y + Settings.NodeMargins.y );
 
@@ -130,11 +112,10 @@ namespace ResearchPal
             
             // create the scroll area below the search box (plus a small margin) so it stays on top
             Widgets.BeginScrollView(new Rect(canvas.x,
-                                    canvas.y + filterHeight + Settings.NodeMargins.y,
-                                    canvas.width,canvas.height - filterHeight - Settings.NodeMargins.y),
+                                    canvas.y + filterManager.Height + Settings.NodeMargins.y,
+                                    canvas.width,canvas.height - filterManager.Height - Settings.NodeMargins.y),
                                     ref _scrollPosition, view );
-            GUI.BeginGroup( view );
-
+            GUI.BeginGroup( view );            
             Text.Anchor = TextAnchor.MiddleCenter;
 
             // draw regular connections, not done first to better highlight done.
@@ -144,7 +125,7 @@ namespace ResearchPal
             }
 
             // draw connections from completed nodes
-            if (FilterPhrase.NullOrEmpty())
+            if (filterManager.FilterPhrase.NullOrEmpty())
             {
                 foreach (Pair<Node, Node> connection in connections.Where(pair => pair.Second.Research.IsFinished))
                 {
@@ -165,42 +146,46 @@ namespace ResearchPal
             Node scrollToNode = null;
             foreach ( Node node in nodes )
             {
+                // draw the node
                 bool visible = node.Draw();
 
-                if (node.FilterMatch)
+                // ensure that at least one matching node is visible, prioritize highest on the screen            
+                if (filterManager.FilterDirty)
                 {                    
-                    if (!reqScroll)
-                        continue;
-
-                    // this node is a match and is currently visible, we don't need to scroll
-                    if (visible)
+                    if (node.FilterMatch.IsValidMatch())
                     {
-                        reqScroll = false;
-                        scrollToNode = null;
-                    } else {
-                        // this node is a match, but isn't visible. if it's the highest node then we'll scroll to it
-                        if (scrollToNode == null || node.Pos.z < scrollToNode.Pos.z)
-                        {
-                            scrollToNode = node;
-                        }
-                    }                    
-                }
-            }
+                        if (!reqScroll)
+                            continue;
 
-            // scroll if necessary
-            if (FilterChanged)
-            {
-                if (scrollToNode != null)
-                {
-                    Rect r = scrollToNode.Rect.ScaledBy(2.0f);
-                    _scrollPosition = new Vector2(r.xMin, r.yMin);
-                } else if (FilterPhrase == "")
-                {
-                    _scrollPosition = Vector2.zero;
+                        // this node is a match and is currently visible, we don't need to scroll
+                        if (visible)
+                        {
+                            reqScroll = false;
+                            scrollToNode = null;
+                        } else {
+                            // this node is a match, but isn't visible. if it's the highest node then we'll scroll to it
+                            if (scrollToNode == null || node.Pos.z < scrollToNode.Pos.z)
+                            {
+                                scrollToNode = node;
+                            }
+                        }
+                    }
                 }
             }
             
-
+            if (filterManager.FilterDirty)
+            {
+                // scroll to a matching node if necessary
+                if (scrollToNode != null)
+                {
+                    // scale the focus area to ensure it all fits on the screen
+                    Rect r = scrollToNode.Rect.ScaledBy(2.0f);
+                    _scrollPosition = new Vector2(r.xMin, r.yMin);
+                } else if (filterManager.FilterPhrase == "")
+                {
+                    _scrollPosition = Vector2.zero;
+                }
+            }            
             nodes.Clear();
 
             // register hub tooltips

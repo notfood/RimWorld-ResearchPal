@@ -37,27 +37,27 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>Y:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="0Harmony">
       <HintPath>..\Assemblies\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\Steam\steamapps\common\RimWorld\RimWorldLinux_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\Steam\steamapps\common\RimWorld\RimWorldLinux_Data\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>Y:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\String_Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\BuildableDef_Extensions.cs" />
     <Compile Include="Extensions\Def_Extensions.cs" />
     <Compile Include="Extensions\List_Extensions.cs" />
     <Compile Include="Extensions\ResearchProjectDef_Extensions.cs" />
     <Compile Include="Extensions\Texture2D_Extensions.cs" />
+    <Compile Include="ResearchPal\FilterManager.cs" />
     <Compile Include="ResearchPal\MainTabWindow_ResearchTree.cs" />
     <Compile Include="ResearchPal\Node.cs" />
     <Compile Include="ResearchPal\Queue.cs" />
@@ -82,14 +82,10 @@
   -->
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Project</StartAction>
-    <StartProgram></StartProgram>
+    <StartProgram>
+    </StartProgram>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="ResearchPal\" />
-    <Folder Include="Injectors\" />
-    <Folder Include="Util\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
