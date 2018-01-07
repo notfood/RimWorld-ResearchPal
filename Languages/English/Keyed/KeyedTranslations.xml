@@ -10,7 +10,7 @@
   <LClickReplaceQueue>Left-Click to replace queue</LClickReplaceQueue>
   <LClickRemoveFromQueue>Left-Click to remove from queue</LClickRemoveFromQueue>
   <SLClickAddToQueue>Shift-Left-Click to add to queue</SLClickAddToQueue>
-  <CLClickDebugInstant>Ctrl-Shift-Left-Click to instantly complete</CLClickDebugInstant>
+  <CLClickDebugInstant>Ctrl-Left-Click to instantly complete</CLClickDebugInstant>
   <RClickForDetails>Right click for details</RClickForDetails>
   
   <RequiresThis>Requires</RequiresThis>
