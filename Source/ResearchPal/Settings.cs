@@ -29,6 +29,7 @@ namespace ResearchPal
         public static readonly Vector2 NodeMargins = new Vector2 (50f, 10f);
         public static readonly Vector2 NodeSize = new Vector2 (200f, 50f);
 
+        public static float FilterNonMatchAlpha = 0.2f;
         #endregion UI elements
 
         public static void DoSettingsWindowContents (Rect rect)
@@ -50,6 +51,9 @@ namespace ResearchPal
             list.CheckboxLabeled (ResourceBank.String.ShowFilteredLinks, ref showFilteredLinks,
                                   ResourceBank.String.ShowFilteredLinksTip);
 
+            list.Label(ResourceBank.String.FilterOpacityDesc(0.2f, (float)Math.Round(FilterNonMatchAlpha, 2)));
+            FilterNonMatchAlpha = (float)Math.Round(list.Slider(FilterNonMatchAlpha, 0, 1), 2);
+
             list.End ();
         }
 
@@ -61,6 +65,7 @@ namespace ResearchPal
             Scribe_Values.Look (ref shouldReset, "ShouldResetOnOpen", false);
             Scribe_Values.Look (ref showFilteredLinks, "ShowFilteredLinks", false);
             Scribe_Values.Look (ref debugResearch, "DebugResearch", false);
+            Scribe_Values.Look (ref FilterNonMatchAlpha, "FilterNonMatchAlpha", 0.2f, false);
         }
     }
 }

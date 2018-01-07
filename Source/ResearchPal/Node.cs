@@ -316,7 +316,7 @@ namespace ResearchPal
         /// <returns></returns>
         private float NodeAlpha()
         {
-            return (_matchType == FilterManager.FilterMatchType.NO_MATCH ? 0.2f : 1.0f);
+            return (_matchType == FilterManager.FilterMatchType.NO_MATCH ? Settings.FilterNonMatchAlpha : 1.0f);
         }
 
         /// <summary>

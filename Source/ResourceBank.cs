@@ -58,6 +58,16 @@ namespace ResearchPal
             {
                 return "FilterResults".Translate(count);
             }
+
+            public static string FilterOpacityDesc(float defaultValue, float currentValue)
+            {
+                return "FilterOpacityDesc".Translate(defaultValue, currentValue);
+            }
+        }
+
+        public static class Float
+        {
+
         }
 
     }

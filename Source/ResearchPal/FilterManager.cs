@@ -342,6 +342,8 @@ namespace ResearchPal
             ClearInput();
             _forceShowFilter = false;
             _resetOnOpen = true;
+            _filterResultTitle = "";
+            _filterResultTooltip = "";
         }
 
     }

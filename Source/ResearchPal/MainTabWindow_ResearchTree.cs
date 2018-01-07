@@ -126,7 +126,7 @@ namespace ResearchPal
             foreach ( Pair<Node, Node> connection in connections.Where( pair => !pair.Second.Research.IsFinished ) )
             {
                 ResearchTree.DrawLine( connection,
-                    filterManager.FilterPhrase.NullOrEmpty() ? connection.First.Tree.GreyedColor : ColorHelper.AdjustAlpha(connection.First.Tree.GreyedColor, 0.2f) );
+                    filterManager.FilterPhrase.NullOrEmpty() ? connection.First.Tree.GreyedColor : ColorHelper.AdjustAlpha(connection.First.Tree.GreyedColor, Settings.FilterNonMatchAlpha) );
             }
 
             // draw connections from completed nodes
@@ -134,7 +134,7 @@ namespace ResearchPal
             {
                 if (!filterManager.FilterPhrase.NullOrEmpty())
                 {
-                    ResearchTree.DrawLine(connection, ColorHelper.AdjustAlpha(connection.First.Tree.GreyedColor, 0.2f));
+                    ResearchTree.DrawLine(connection, ColorHelper.AdjustAlpha(connection.First.Tree.GreyedColor, Settings.FilterNonMatchAlpha));
                 } else {
                     ResearchTree.DrawLine(connection, connection.First.Tree.MediumColor);
                 }

@@ -28,6 +28,8 @@
   <FilterTitleTechLevel>Tech Level:</FilterTitleTechLevel>
   <FilterResults>{0} Results Found.</FilterResults>
   
+  <FilterOpacityDesc>How opaque non-matching research should be. Default: {0}, Current: {1}</FilterOpacityDesc>
+  
   <ResearchPal>ResearchPal</ResearchPal>
   <ResearchPal.ShowNotificationPopup>Show Notification Popup</ResearchPal.ShowNotificationPopup>
   <ResearchPal.ShowNotificationPopupTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationPopupTip>
