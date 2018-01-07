@@ -23,9 +23,11 @@ namespace ResearchPal
             public static readonly string RequiresThis = "RequiresThis".Translate ();
 
             public static readonly string ShowNotificationPopup = "ResearchPal.ShowNotificationPopup".Translate ();
-            public static readonly string ShowNotificationTip = "ResearchPal.ShowNotificationTip".Translate ();
+            public static readonly string ShowNotificationPopupTip = "ResearchPal.ShowNotificationPopupTip".Translate ();
             public static readonly string ShouldPauseOnOpen = "ResearchPal.ShouldPauseOnOpen".Translate ();
             public static readonly string ShouldPauseOnOpenTip = "ResearchPal.ShouldPauseOnOpenTip".Translate ();
+            public static readonly string DebugResearch = "ResearchPal.DebugResearch".Translate ();
+            public static readonly string DebugResearchTip = "ResearchPal.DebugResearchTip".Translate ();
 
             public static readonly string ShouldResetOnOpen = "ResearchPal.ShouldResetOnOpen".Translate ();
             public static readonly string ShouldResetOnOpenTip = "ResearchPal.ShouldResetOnOpenTip".Translate ();
@@ -35,7 +37,7 @@ namespace ResearchPal
 
             public static readonly string FilterTitleResearch = "FilterTitleResearch".Translate ();
             public static readonly string FilterTitleUnlocks = "FilterTitleUnlocks".Translate ();
-            public static readonly string FilterTitleTechLevel = "FilterTitleTechLevel".Translate ();            
+            public static readonly string FilterTitleTechLevel = "FilterTitleTechLevel".Translate ();
 
             public static string ResearchFinished(string label)
             {
@@ -57,6 +59,6 @@ namespace ResearchPal
                 return "FilterResults".Translate(count);
             }
         }
-            
+
     }
 }

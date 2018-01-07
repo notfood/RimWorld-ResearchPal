@@ -10,7 +10,7 @@
   <LClickReplaceQueue>Left-Click to replace queue</LClickReplaceQueue>
   <LClickRemoveFromQueue>Left-Click to remove from queue</LClickRemoveFromQueue>
   <SLClickAddToQueue>Shift-Left-Click to add to queue</SLClickAddToQueue>
-  <CLClickDebugInstant>Ctrl-Left-Click to instantly complete</CLClickDebugInstant>
+  <CLClickDebugInstant>Ctrl-Shift-Left-Click to instantly complete</CLClickDebugInstant>
   <RClickForDetails>Right click for details</RClickForDetails>
   
   <RequiresThis>Requires</RequiresThis>
@@ -29,13 +29,17 @@
   <FilterResults>{0} Results Found.</FilterResults>
   
   <ResearchPal>ResearchPal</ResearchPal>
-  <ResearchPal.ShowNotificationPopup>Hide Notification Popup</ResearchPal.ShowNotificationPopup>
-  <ResearchPal.ShowNotificationTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationTip>
+  <ResearchPal.ShowNotificationPopup>Show Notification Popup</ResearchPal.ShowNotificationPopup>
+  <ResearchPal.ShowNotificationPopupTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationPopupTip>
   <ResearchPal.ShouldPauseOnOpen>Pause on Display</ResearchPal.ShouldPauseOnOpen>
   <ResearchPal.ShouldPauseOnOpenTip>Whenever the game should pause when the research tab is displayed.</ResearchPal.ShouldPauseOnOpenTip>
+
   <ResearchPal.ShouldResetOnOpen>Reset on Display</ResearchPal.ShouldResetOnOpen>
   <ResearchPal.ShouldResetOnOpenTip>Clear filtering and reset scroll position.</ResearchPal.ShouldResetOnOpenTip>
   <ResearchPal.ShowFilteredLinks>Highlight Filtered Prerequisites</ResearchPal.ShowFilteredLinks>
   <ResearchPal.ShowFilteredLinksTip>Highlight the prerequisite research for filtered matches.</ResearchPal.ShowFilteredLinksTip>
+
+  <ResearchPal.DebugResearch>Debug Tools</ResearchPal.DebugResearch>
+  <ResearchPal.DebugResearchTip>Whenever debug tools should be active (dev mode only).</ResearchPal.DebugResearchTip>
 
 </LanguageData>

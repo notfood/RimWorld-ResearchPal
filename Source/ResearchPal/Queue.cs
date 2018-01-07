@@ -178,7 +178,7 @@ namespace ResearchPal
             } else {
                 next = null;
                 text += "\n\nNext in queue: none";
-                letter = LetterDefOf.NegativeEvent;
+                letter = LetterDefOf.NeutralEvent;
             }
 
             Find.LetterStack.ReceiveLetter (label, text, letter);

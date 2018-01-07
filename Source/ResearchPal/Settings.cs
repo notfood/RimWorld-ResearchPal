@@ -16,6 +16,7 @@ namespace ResearchPal
         public static bool   shouldPause        = false;
         public static bool   shouldReset        = false;
         public static bool   showFilteredLinks  = false;
+        public static bool   debugResearch      = false;
 
         #endregion tuning parameters
 
@@ -37,10 +38,11 @@ namespace ResearchPal
             list.Begin (rect);
 
             list.CheckboxLabeled (ResourceBank.String.ShowNotificationPopup, ref showNotification,
-                                  ResourceBank.String.ShowNotificationTip);
-
+                                  ResourceBank.String.ShowNotificationPopupTip);
             list.CheckboxLabeled (ResourceBank.String.ShouldPauseOnOpen, ref shouldPause,
                                   ResourceBank.String.ShouldPauseOnOpenTip);
+            list.CheckboxLabeled (ResourceBank.String.DebugResearch, ref debugResearch,
+                                  ResourceBank.String.DebugResearchTip);
 
             list.CheckboxLabeled (ResourceBank.String.ShouldResetOnOpen, ref shouldReset,
                                   ResourceBank.String.ShouldResetOnOpenTip);
@@ -58,6 +60,7 @@ namespace ResearchPal
             Scribe_Values.Look (ref shouldPause, "ShouldPauseOnOpen", false);
             Scribe_Values.Look (ref shouldReset, "ShouldResetOnOpen", false);
             Scribe_Values.Look (ref showFilteredLinks, "ShowFilteredLinks", false);
+            Scribe_Values.Look (ref debugResearch, "DebugResearch", false);
         }
     }
 }
