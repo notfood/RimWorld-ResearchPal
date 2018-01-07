@@ -196,6 +196,14 @@ namespace ResearchPal
             return false;
         }
 
+
+        /// <summary>
+        /// Apply the alpha to the color passed in
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="alpha"></param>
+        /// <returns></returns>
+        public static Color AdjustAlpha(Color col, float alpha) => new Color(col.r, col.g, col.b, alpha);
     }
 
 }

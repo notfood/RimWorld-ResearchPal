@@ -17,7 +17,7 @@ namespace ResearchPal
         public static Dictionary<Rect, List<String>> hubTips        = new Dictionary<Rect, List<string>>();
         public static List<Node> nodes                              = new List<Node>();
         public static FilterManager filterManager                   = new FilterManager();
-        
+
         public override Vector2 RequestedTabSize {
             get {
                 return new Vector2 (UI.screenWidth, UI.screenHeight);
@@ -43,14 +43,18 @@ namespace ResearchPal
             if (Settings.shouldReset)
             {
                 filterManager.Reset();
-            }            
+            }
 
         }
 
         public override void WindowOnGUI()
         {
             base.WindowOnGUI();
-            filterManager.CheckPressedKey();            
+            // if a keypress is detected here, it indicates we don't have focus on the filter input, so try to get focus back
+            if (Event.current.isKey)
+            {
+                filterManager.KeyPress();
+            }
         }
 
         public override void DoWindowContents( Rect canvas )
@@ -62,10 +66,10 @@ namespace ResearchPal
 
             filterManager.DrawFilterResults(canvas);
         }
-               
+
         private void PrepareTreeForDrawing()
         {
-            
+
             // loop through trees
             foreach ( Tree tree in ResearchTree.Trees )
             {
@@ -103,35 +107,38 @@ namespace ResearchPal
 
             maxDepth = Math.Max( maxDepth, ResearchTree.Orphans.MaxDepth );
             totalWidth += ResearchTree.Orphans.Width;
-                   
+
             float width = ( maxDepth + 1 ) * ( Settings.NodeSize.x + Settings.NodeMargins.x ); // zero based
             float height = ( totalWidth - 1 ) * (Settings.NodeSize.y + Settings.NodeMargins.y );
 
             // main view rect
             Rect view = new Rect( 0f, 0f, width, height );
-            
+
             // create the scroll area below the search box (plus a small margin) so it stays on top
             Widgets.BeginScrollView(new Rect(canvas.x,
                                     canvas.y + filterManager.Height + Settings.NodeMargins.y,
                                     canvas.width,canvas.height - filterManager.Height - Settings.NodeMargins.y),
                                     ref _scrollPosition, view );
-            GUI.BeginGroup( view );            
+            GUI.BeginGroup( view );
             Text.Anchor = TextAnchor.MiddleCenter;
 
             // draw regular connections, not done first to better highlight done.
             foreach ( Pair<Node, Node> connection in connections.Where( pair => !pair.Second.Research.IsFinished ) )
-            {                
-                ResearchTree.DrawLine( connection, connection.First.AdjustFilterAlpha(connection.First.Tree.GreyedColor,0.05f) );
+            {
+                ResearchTree.DrawLine( connection,
+                    filterManager.FilterPhrase.NullOrEmpty() ? connection.First.Tree.GreyedColor : ColorHelper.AdjustAlpha(connection.First.Tree.GreyedColor, 0.2f) );
             }
 
             // draw connections from completed nodes
-            if (filterManager.FilterPhrase.NullOrEmpty())
+            foreach ( Pair<Node, Node> connection in connections.Where(pair => pair.Second.Research.IsFinished) )
             {
-                foreach (Pair<Node, Node> connection in connections.Where(pair => pair.Second.Research.IsFinished))
+                if (!filterManager.FilterPhrase.NullOrEmpty())
                 {
-                    ResearchTree.DrawLine(connection, connection.First.AdjustFilterAlpha(connection.First.Tree.MediumColor, 0.05f));
+                    ResearchTree.DrawLine(connection, ColorHelper.AdjustAlpha(connection.First.Tree.GreyedColor, 0.2f));
+                } else {
+                    ResearchTree.DrawLine(connection, connection.First.Tree.MediumColor);
                 }
-            }            
+            }
             connections.Clear();
 
             // draw highlight connections on top
@@ -149,9 +156,9 @@ namespace ResearchPal
                 // draw the node
                 bool visible = node.Draw();
 
-                // ensure that at least one matching node is visible, prioritize highest on the screen            
+                // ensure that at least one matching node is visible, prioritize highest on the screen
                 if (filterManager.FilterDirty)
-                {                    
+                {
                     if (node.FilterMatch.IsValidMatch())
                     {
                         if (!reqScroll)
@@ -172,7 +179,7 @@ namespace ResearchPal
                     }
                 }
             }
-            
+
             if (filterManager.FilterDirty)
             {
                 // scroll to a matching node if necessary
@@ -185,7 +192,7 @@ namespace ResearchPal
                 {
                     _scrollPosition = Vector2.zero;
                 }
-            }            
+            }
             nodes.Clear();
 
             // register hub tooltips

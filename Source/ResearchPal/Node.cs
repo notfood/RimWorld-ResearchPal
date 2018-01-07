@@ -39,7 +39,7 @@ namespace ResearchPal
 
         private bool _rectSet;
         private Vector2 _right = Vector2.zero;
-        private FilterManager.FilterMatchType _matchType = FilterManager.FilterMatchType.NONE;        
+        private FilterManager.FilterMatchType _matchType = FilterManager.FilterMatchType.NONE;
 
         #endregion Fields
 
@@ -199,7 +199,7 @@ namespace ResearchPal
             {
                 _matchType = value;
             }
-        }        
+        }
 
         #endregion Properties
 
@@ -298,21 +298,16 @@ namespace ResearchPal
             text.AppendLine("");
             Log.Message(text.ToString());
         }
-        
+
         /// <summary>
         /// Adjusts the alpha channel of the color passed in for filtering
         /// </summary>
         /// <param name="col"></param>
         /// <param name="alpha"></param>
         /// <returns></returns>
-        public Color AdjustFilterAlpha(Color col, float alpha = 0.1f)
+        private Color AdjustFilterAlpha(Color col)
         {
-            if (_matchType == FilterManager.FilterMatchType.NO_MATCH)
-            {
-                return new Color(GUI.color.r, GUI.color.b, GUI.color.b, alpha);
-            } else {
-                return col;
-            }            
+            return ColorHelper.AdjustAlpha(col, NodeAlpha());
         }
 
         /// <summary>
@@ -321,7 +316,7 @@ namespace ResearchPal
         /// <returns></returns>
         private float NodeAlpha()
         {
-            return (_matchType == FilterManager.FilterMatchType.NO_MATCH ? 0.1f : 1.0f);
+            return (_matchType == FilterManager.FilterMatchType.NO_MATCH ? 0.2f : 1.0f);
         }
 
         /// <summary>
@@ -363,7 +358,7 @@ namespace ResearchPal
                 }
             }
             // filter highlights
-            else if (_matchType > FilterManager.FilterMatchType.NO_MATCH)
+            else if (_matchType.IsValidMatch())
             {
                 GUI.DrawTexture(Rect, ResearchTree.ButtonActive);
                 if (Settings.showFilteredLinks)
@@ -371,7 +366,7 @@ namespace ResearchPal
                     HighlightWithPrereqs();
                 } else {
                     Highlight(GenUI.MouseoverColor, false, false);
-                }                                               
+                }
             }
             // if not moused over, just draw the default button state
             else
@@ -450,6 +445,9 @@ namespace ResearchPal
 
                 // tooltip
                 TooltipHandler.TipRegion(iconRect, unlocks[i].Second); // new TipSignal( unlocks[i].Second, Settings.TipID, TooltipPriority.Pawn ) );
+
+                // reset the color
+                GUI.color = Color.white;
             }
 
             // if clicked and not yet finished, queue up this research and all prereqs.
@@ -460,7 +458,7 @@ namespace ResearchPal
                 {
                     if (Prefs.DevMode && Event.current.control)
                     {
-                        List<Node> nodesToResearch = GetMissingRequiredRecursive().Concat(new List<Node>(new[] { this })).ToList();                        
+                        List<Node> nodesToResearch = GetMissingRequiredRecursive().Concat(new List<Node>(new[] { this })).ToList();
                         foreach (Node n in nodesToResearch)
                         {
                             if (Queue.IsQueued(n))

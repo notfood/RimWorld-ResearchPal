@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using RimWorld;
 using Verse;
+using System.Text.RegularExpressions;
 
 namespace ResearchPal
 {
@@ -27,10 +28,11 @@ namespace ResearchPal
         private const float _filterHeight = 24f;
 
         private string _filterPhrase = "";
+        private string _inputChar;
+
         private bool _filterDirty = false;
         private bool _resetOnOpen = false;
 
-        private string _keyChar = "";
         private bool _settingFocus = false;
         private bool _forceShowFilter = false;
 
@@ -45,6 +47,7 @@ namespace ResearchPal
         private Rect _rectMessage;
 
         private const string _filterInputName = "FilterInput";
+        private static Regex _rxInput = new Regex(@"[\p{L}\p{Nd}\s-_]+");
 
         public static Texture2D FilterIcon;
         #endregion Fields
@@ -71,17 +74,16 @@ namespace ResearchPal
             }
         }
 
-        public string PressedKeyChar
+        public void KeyPress()
         {
-            get
+            if (_rxInput.IsMatch(Event.current.character.ToString()))
             {
-                return _keyChar;
-            }
-            set
+                GUIUtility.keyboardControl = 0; // force a refocus on the input control
+                _inputChar = Event.current.character.ToString();
+            } else if (Event.current.keyCode == KeyCode.Backspace)
             {
-                _keyChar = value;
+                GUIUtility.keyboardControl = 0;
             }
-
         }
 
         public Rect RectFilterBtn
@@ -157,17 +159,20 @@ namespace ResearchPal
 
         private void CreateRects()
         {
+            // TODO: find the actual width of the window
+            Log.Message("screen width: " + UI.screenWidth.ToString());
+
             // filter button
             _rectFilterBtn = new Rect(0f, 0f, _filterHeight, _filterHeight);
 
-            // main filter area
+            // filter input
             _rectFilter = new Rect(_rectFilterBtn.xMax + 6f, 0f, (UI.screenWidth - _rectFilterBtn.width) / 6f, _filterHeight);
 
             // clear button area
-            _rectClearBtn = new Rect(_rectFilter.xMax + 3f, 0f + (_rectFilter.height - (_filterHeight / 2f)) / 2f, _filterHeight / 2f, _filterHeight / 2f);
+            _rectClearBtn = new Rect(_rectFilter.xMax + 3f, _filterHeight / 4f, _filterHeight / 2f, _filterHeight / 2f);
 
             // result message area
-            _rectMessage = new Rect(_rectClearBtn.xMax + 10f, 0f, UI.screenWidth - (_rectClearBtn.xMax + 10f), _filterHeight);
+            _rectMessage = new Rect(_rectClearBtn.xMax + 10f, 0f, (UI.screenWidth - (_rectClearBtn.xMax + 10f)) / 2f, _filterHeight);
 
             _rectSet = true;
         }
@@ -202,7 +207,7 @@ namespace ResearchPal
                 {
                     ret = FilterMatchType.RESEARCH;
                 }
-                else if (node.Research.GetUnlockDefsAndDescs() != null && 
+                else if (node.Research.GetUnlockDefsAndDescs() != null &&
                     node.Research.GetUnlockDefsAndDescs().Any(recipe => recipe.First.label.Contains(phrase, StringComparison.InvariantCulture)))
                 {
                     ret = FilterMatchType.UNLOCK;
@@ -237,11 +242,11 @@ namespace ResearchPal
             GUI.BeginGroup(canvas);
 
             string oldPhrase = _filterPhrase;
-            if (_keyChar != "")
+            if (!_inputChar.NullOrEmpty())
             {
-                _filterPhrase = _keyChar;
-                _keyChar = "";
-            }            
+                _filterPhrase += _inputChar;
+                _inputChar = "";
+            }
 
             // check the toggle button
             if (Widgets.ButtonImage(RectFilterBtn, FilterIcon))
@@ -265,7 +270,7 @@ namespace ResearchPal
 
                     // focus the filter input field immediately if we're not already focused
                     if (GUI.GetNameOfFocusedControl() != _filterInputName)
-                    {                        
+                    {
                         _settingFocus = true;
                         GUI.FocusControl(_filterInputName);
                     } else {
@@ -279,11 +284,10 @@ namespace ResearchPal
                             _settingFocus = false;
                         }
                     }
-                    
-                    _filterPhrase = Widgets.TextField(RectFilter, _filterPhrase);
 
+                    _filterPhrase = Widgets.TextField(RectFilter, _filterPhrase);
                 }
-            } else {
+            } else if (GUI.GetNameOfFocusedControl() == _filterInputName) {
                 GUIUtility.keyboardControl = 0;
             }
 
@@ -291,14 +295,13 @@ namespace ResearchPal
             if (_filterDirty)
             {
                 _matchResults.Clear();
-            }            
+            }
             GUI.EndGroup();
         }
 
-        
         private void BuildFilterResultMessages()
         {
-            
+
             _filterResultTitle = ResourceBank.String.FilterResults(_matchResults.Sum(k => k.Value.Count));
 
             var tt = new StringBuilder();
@@ -320,10 +323,10 @@ namespace ResearchPal
                 BuildFilterResultMessages();
             }
 
-            // draw the 
             GUI.BeginGroup(canvas);
+            GUI.color = Color.white;
             if (FilterActive())
-            {                
+            {
                 Widgets.Label(RectMessage, _filterResultTitle);
                 if (!_filterResultTooltip.NullOrEmpty())
                 {
@@ -336,17 +339,9 @@ namespace ResearchPal
 
         public void Reset()
         {
-            _filterPhrase = "";
+            ClearInput();
             _forceShowFilter = false;
             _resetOnOpen = true;
-        }
-
-        public void CheckPressedKey()
-        {
-            if (Event.current.isKey && char.IsLetterOrDigit(Event.current.character) && GUI.GetNameOfFocusedControl() != _filterInputName)
-            {
-                _keyChar = Event.current.character.ToString();
-            }
         }
 
     }
