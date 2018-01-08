@@ -305,7 +305,7 @@ namespace ResearchPal
         /// <param name="col"></param>
         /// <param name="alpha"></param>
         /// <returns></returns>
-        private Color AdjustFilterAlpha(Color col)
+        public Color AdjustFilterAlpha(Color col)
         {
             return ColorHelper.AdjustAlpha(col, NodeAlpha());
         }

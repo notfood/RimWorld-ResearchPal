@@ -49,22 +49,25 @@ namespace ResearchPal
             foreach (Node node in _queue)
             {
                 // draw coloured tag
-                GUI.color = node.Tree.MediumColor;
+                GUI.color = node.AdjustFilterAlpha(node.Tree.MediumColor);
                 GUI.DrawTexture(node.QueueRect, CircleFill);
 
                 // if this is not first in line, grey out centre of tag
                 if (i > 1)
                 {
-                    GUI.color = node.Tree.GreyedColor;
+                    GUI.color = node.AdjustFilterAlpha(node.Tree.GreyedColor);
                     GUI.DrawTexture(node.QueueRect.ContractedBy(2f), CircleFill);
                 }
 
                 // draw queue number
-                GUI.color = Color.white;
+                GUI.color = node.AdjustFilterAlpha(Color.white);
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Widgets.Label(node.QueueRect, i++.ToString());
                 Text.Anchor = TextAnchor.UpperLeft;
             }
+
+            // reset color
+            GUI.color = Color.white;
         }
 
         public static void Enqueue(Node node, bool add)
