@@ -65,10 +65,5 @@ namespace ResearchPal
             }
         }
 
-        public static class Float
-        {
-
-        }
-
     }
 }

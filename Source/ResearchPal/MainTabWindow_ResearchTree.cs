@@ -51,6 +51,9 @@ namespace ResearchPal
         {
             base.WindowOnGUI();
             // if a keypress is detected here, it indicates we don't have focus on the filter input, so try to get focus back
+
+            // KNOWN ISSUE:
+            //   if the mouse is over another control (like a research node) the backspace key won't register on the first press
             if (Event.current.isKey)
             {
                 filterManager.KeyPress();

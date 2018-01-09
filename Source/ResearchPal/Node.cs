@@ -391,14 +391,7 @@ namespace ResearchPal
             Text.Anchor = TextAnchor.UpperLeft;
             Text.WordWrap = true;
             Text.Font = _largeLabel ? GameFont.Tiny : GameFont.Small;
-            if (Settings.debugResearch && Prefs.DevMode)
-            {
-                Widgets.Label(LabelRect, Research.LabelCap + " (" + Depth + ", " + Genus + ", " + Family + "):");
-            }
-            else
-            {
-                Widgets.Label(LabelRect, Research.LabelCap);
-            }
+            Widgets.Label(LabelRect, StringExtensions.TitleCase(Research.LabelCap));
 
             // draw research cost and icon
             Text.Anchor = TextAnchor.UpperRight;
@@ -698,6 +691,7 @@ namespace ResearchPal
             if (Prefs.DevMode)
             {
                 text.AppendLine();
+                text.Append("Depth:" + Depth + " Genus:" + Genus + " Family:" + Family);
                 text.Append("Position: " + this.Pos.ToString());
                 text.Append("Rect: " + this.Rect.ToString());
             }

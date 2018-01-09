@@ -14,18 +14,20 @@ namespace ResearchPal
     public class FilterManager
     {
 
+        // matching priority is done in order of value
         public enum FilterMatchType
         {
-            NONE,
-            NO_MATCH,
-            RESEARCH,
-            UNLOCK,
-            TECH_LEVEL
+            RESEARCH   = 0,
+            UNLOCK     = 1,
+            TECH_LEVEL = 2,
+            NONE       = 99,
+            NO_MATCH   = 100
         }
 
         #region Fields
 
         private const float _filterHeight = 24f;
+        private const int _commaConcatThreshold = 15;
 
         private string _filterPhrase = "";
         private string _inputChar;
@@ -71,18 +73,6 @@ namespace ResearchPal
             get
             {
                 return _filterHeight;
-            }
-        }
-
-        public void KeyPress()
-        {
-            if (_rxInput.IsMatch(Event.current.character.ToString()))
-            {
-                GUIUtility.keyboardControl = 0; // force a refocus on the input control
-                _inputChar = Event.current.character.ToString();
-            } else if (Event.current.keyCode == KeyCode.Backspace)
-            {
-                GUIUtility.keyboardControl = 0;
             }
         }
 
@@ -157,10 +147,25 @@ namespace ResearchPal
         #endregion Properties
 
 
+        /// <summary>
+        /// Process the current event key for valid input and try to refocus on the filter input
+        /// </summary>
+        public void KeyPress()
+        {
+            if (_rxInput.IsMatch(Event.current.character.ToString()))
+            {
+                GUIUtility.keyboardControl = 0; // force a refocus on the input control
+                _inputChar = Event.current.character.ToString();
+            }
+            else if (Event.current.keyCode == KeyCode.Backspace)
+            {
+                GUIUtility.keyboardControl = 0;
+            }
+        }
+
         private void CreateRects()
         {
-            // TODO: find the actual width of the window
-            Log.Message("screen width: " + UI.screenWidth.ToString());
+            // TODO: find the actual width of the tab/window instead of using screen width
 
             // filter button
             _rectFilterBtn = new Rect(0f, 0f, _filterHeight, _filterHeight);
@@ -199,23 +204,48 @@ namespace ResearchPal
                 return FilterMatchType.NONE;
 
             string phrase = _filterPhrase.Trim();
-            FilterMatchType ret;
+            FilterMatchType ret = FilterMatchType.NONE;
+            string retDesc = StringExtensions.TitleCase(node.Research.LabelCap); // default
             if (phrase != "")
             {
-                // look for matching research or matching recipes
-                if (node.Research.label.Contains(phrase, StringComparison.InvariantCultureIgnoreCase))
+                foreach (FilterMatchType tryMatch in Enum.GetValues(typeof(FilterMatchType)))
                 {
-                    ret = FilterMatchType.RESEARCH;
-                }
-                else if (node.Research.GetUnlockDefsAndDescs() != null &&
-                    node.Research.GetUnlockDefsAndDescs().Any(recipe => recipe.First.label.Contains(phrase, StringComparison.InvariantCulture)))
-                {
-                    ret = FilterMatchType.UNLOCK;
-                } else if (node.Research.techLevel.ToStringHuman().Contains(phrase, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    ret = FilterMatchType.TECH_LEVEL;
-                } else {
-                    ret = FilterMatchType.NO_MATCH;
+                    Log.Message("trying match for " + tryMatch.ToString());
+                    switch (tryMatch)
+                    {
+                        case FilterMatchType.RESEARCH:
+                            if (node.Research.label.Contains(phrase, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                ret = FilterMatchType.RESEARCH;
+                            }
+                            break;
+                        case FilterMatchType.UNLOCK:
+                            {
+                                List<string> unlockDescs = node.Research.GetUnlockDefsAndDescs()
+                                        .Where(unlock => unlock.First.label.Contains(phrase, StringComparison.InvariantCulture))
+                                        .Select(unlock => unlock.First.label).ToList();
+                                if (unlockDescs.Count > 0)
+                                {
+                                    retDesc = string.Format("{0} ({1})", retDesc, StringExtensions.TitleCase(string.Join(", ", unlockDescs.ToArray())));
+                                    ret = FilterMatchType.UNLOCK;
+                                }
+                            }
+                            break;
+                        case FilterMatchType.TECH_LEVEL:
+                            {
+                                if (node.Research.techLevel.ToStringHuman().Contains(phrase, StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    ret = FilterMatchType.TECH_LEVEL;
+                                }
+                            }
+                            break;
+                        default:
+                            ret = FilterMatchType.NO_MATCH;
+                            break;
+
+                    }
+                    if (ret != FilterMatchType.NONE)
+                        break;
                 }
             } else {
                 ret = FilterMatchType.NONE;
@@ -228,7 +258,7 @@ namespace ResearchPal
                 {
                     _matchResults.Add(ret, new List<string>());
                 }
-                _matchResults[ret].Add(node.Research.LabelCap);
+                _matchResults[ret].Add(retDesc);
             }
 
             // update the node of the result
@@ -301,14 +331,18 @@ namespace ResearchPal
 
         private void BuildFilterResultMessages()
         {
-
             _filterResultTitle = ResourceBank.String.FilterResults(_matchResults.Sum(k => k.Value.Count));
 
             var tt = new StringBuilder();
             foreach (KeyValuePair<FilterMatchType, List<string>> info in _matchResults.OrderBy(k => k.Key))
             {
                 tt.AppendLine(info.Key.ToFriendlyString());
-                tt.Append(string.Join(info.Value.Count() < 11 ? Environment.NewLine : ", ", info.Value.ToArray()));
+                string indent = "";
+                if (info.Value.Count() <= _commaConcatThreshold)
+                {
+                    indent = "  ";
+                }
+                tt.Append(indent + string.Join(info.Value.Count() <= _commaConcatThreshold ? Environment.NewLine + indent : ", ", info.Value.ToArray()));
                 tt.AppendLine();
                 tt.AppendLine();
             }
@@ -367,7 +401,7 @@ namespace ResearchPal
 
         public static bool IsValidMatch(this FilterManager.FilterMatchType fType)
         {
-            return (fType > FilterManager.FilterMatchType.NO_MATCH);
+            return (fType != FilterManager.FilterMatchType.NO_MATCH && fType != FilterManager.FilterMatchType.NONE);
         }
     }
 

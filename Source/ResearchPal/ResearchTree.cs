@@ -292,7 +292,7 @@ namespace ResearchPal
             int rootYOffset = 0;
 
             foreach (Node root in roots)
-            {                
+            {
                 // recursively go through all children
                 // width at depths
                 Dictionary<int, int> widthAtDepth = new Dictionary<int, int>();
@@ -336,9 +336,9 @@ namespace ResearchPal
                 // try to position the root beside the top child if there isn't already a node there
                 if (root.Children.Any())
                 {
-                    Node topChild = root.Children.OrderBy(child => child.Pos.z).First();                    
+                    Node topChild = root.Children.OrderBy(child => child.Pos.z).First();
                     if (!Trees.Any(t => t.NodesAtDepth(root.Depth, true).Any(n => n.Pos.z == topChild.Pos.z)))
-                    {                                                
+                    {
                         bestPos = topChild.Pos.z;
                     }
                 }
