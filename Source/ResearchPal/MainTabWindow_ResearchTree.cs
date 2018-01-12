@@ -54,7 +54,7 @@ namespace ResearchPal
 
             // KNOWN ISSUE:
             //   if the mouse is over another control (like a research node) the backspace key won't register on the first press
-            if (Event.current.isKey)
+            if (Event.current.isKey && Input.anyKeyDown)
             {
                 filterManager.KeyPress();
             }
