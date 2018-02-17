@@ -210,7 +210,7 @@ namespace ResearchPal
             {
                 foreach (FilterMatchType tryMatch in Enum.GetValues(typeof(FilterMatchType)))
                 {
-                    Log.Message("trying match for " + tryMatch.ToString());
+                    //Log.Message("trying match for " + tryMatch.ToString());
                     switch (tryMatch)
                     {
                         case FilterMatchType.RESEARCH:

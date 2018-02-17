@@ -293,7 +293,7 @@ namespace ResearchPal
 
             foreach (Node root in roots)
             {
-                // recursively go through all children
+                // recursively go through all children (that haven't been positioned)
                 // width at depths
                 Dictionary<int, int> widthAtDepth = new Dictionary<int, int>();
                 Stack<Node> children = new Stack<Node>(root.Children);
@@ -337,16 +337,27 @@ namespace ResearchPal
                 if (root.Children.Any())
                 {
                     Node topChild = root.Children.OrderBy(child => child.Pos.z).First();
-                    if (!Trees.Any(t => t.NodesAtDepth(root.Depth, true).Any(n => n.Pos.z == topChild.Pos.z)))
+                    // find the first spot at or below the child node at the root depth
+                    int pos = topChild.Pos.z;
+                    List<Node> nodesAtRoot = Trees.SelectMany(t => t.NodesAtDepth(root.Depth, true)).ToList();
+                    while (nodesAtRoot.Any(n => n.Pos.z == pos) && pos < bestPos)
                     {
-                        bestPos = topChild.Pos.z;
+                        pos++;
+                    }
+                    if (pos != bestPos)
+                    {
+                        Log.Message("moving node " + root.ToString() + " near child node " + topChild.ToString() + " to position " + pos);
+                        bestPos = pos;
+                    } else if (maxWidth == 0 && nodesAtRoot.Any(n => n.Pos.z == bestPos)) {
+                        // if the root couldn't be placed by the child node, and all children have been positioned, move the offset down to prevent overlaps
+                        maxWidth = 1;
                     }
                 }
 
                 // move any other roots sharing this position down by the depth
                 foreach (Node overlap in roots.Where(n => n.Pos.z == bestPos && n != root))
                 {
-                    //Log.Message("moving overlapping root node " + overlap.ToString() + " to " + new IntVec2(overlap.Pos.x, overlap.Pos.z + maxWidth).ToString() + " because it overlaps node " + root.ToString());
+                    Log.Message("moving overlapping root node " + overlap.ToString() + " to " + new IntVec2(overlap.Pos.x, overlap.Pos.z + maxWidth).ToString() + " because it overlaps node " + root.ToString());
                     overlap.Pos.z += maxWidth;
                 }
 
