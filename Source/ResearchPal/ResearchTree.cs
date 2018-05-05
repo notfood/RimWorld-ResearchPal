@@ -354,11 +354,11 @@ namespace ResearchPal
                     }
                 }
 
-                // move any other roots sharing this position down by the depth
-                foreach (Node overlap in roots.Where(n => n.Pos.z == bestPos && n != root))
+                // if other root node is already here, move down by the depth
+                while (roots.Where(n => n.Pos.z == bestPos && n != root).Any())
                 {
-                    Log.Message("moving overlapping root node " + overlap.ToString() + " to " + new IntVec2(overlap.Pos.x, overlap.Pos.z + maxWidth).ToString() + " because it overlaps node " + root.ToString());
-                    overlap.Pos.z += maxWidth;
+                    //Log.Message("moving overlapping root node " + overlap.ToString() + " to " + new IntVec2(overlap.Pos.x, overlap.Pos.z + maxWidth).ToString() + " because it overlaps node " + root.ToString());
+                    bestPos += Math.Max(maxWidth, 1); // this is important - maxWidth can easily be 0, breaking the whole thing
                 }
 
                 // set position of this root to the starting offset
@@ -373,7 +373,7 @@ namespace ResearchPal
             curY += rootYOffset;
 
             // create orphan grid
-            int nodesPerRow = (int)(Screen.width / (Settings.NodeSize.x + Settings.NodeMargins.x));
+            int nodesPerRow = (int)(Screen.width / Prefs.UIScale / (Settings.NodeSize.x + Settings.NodeMargins.x));
             List<Node> orphans = Orphans.Leaves.Where(node => !node.Parents.Any() && !node.Children.Any()).OrderBy(node => node.Research.LabelCap).ToList();
 
             // set positions
