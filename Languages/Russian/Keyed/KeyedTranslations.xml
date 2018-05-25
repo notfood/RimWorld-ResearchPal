@@ -1,34 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
+    <!-- Перевод: Well -->
+
 <LanguageData>
 
-  <BuildingResearchTree>Строительство исследовательского дерева</BuildingResearchTree>
+  <BuildingResearchTree>Построение древа исследований</BuildingResearchTree>
 
-  <AllowsBuildingX>Разрешить строительство {0}.</AllowsBuildingX>
-  <AllowsCraftingX>Разрешить рецепты {0}.</AllowsCraftingX>
-  <AllowsSowingXinY>Разрешить посев {0} в {1}.</AllowsSowingXinY>
+  <AllowsBuildingX>Позволяет строить:  {0}.</AllowsBuildingX>
+  <AllowsCraftingX>Открывает рецепт:  {0}.</AllowsCraftingX>
+  <AllowsSowingXinY>Позволяет сеять:  {0} в {1}.</AllowsSowingXinY>
 
-  <LClickReplaceQueue>Щелкните левой кнопкой мыши, чтобы заменить очередь</LClickReplaceQueue>
-  <LClickRemoveFromQueue>Щелкните левой кнопкой мыши, чтобы удалить из очереди</LClickRemoveFromQueue>
-  <SLClickAddToQueue>Shift-Left-Click для добавления в очередь</SLClickAddToQueue>
-  <CLClickDebugInstant>Ctrl-Left-Click чтобы мгновенно завершить</CLClickDebugInstant>
-  <RClickForDetails>Щелкните правой кнопкой мыши, для деталей</RClickForDetails>
+  <LClickReplaceQueue>ЛКМ, чтобы сменить очередь</LClickReplaceQueue>
+  <LClickRemoveFromQueue>ЛКМ для удаления из очереди</LClickRemoveFromQueue>
+  <SLClickAddToQueue>Shift+ЛКМ для добавления в очередь</SLClickAddToQueue>
+  <CLClickDebugInstant>Ctrl+ЛКМ для мгновенного завершения</CLClickDebugInstant>
+  <RClickForDetails>ПКМ для подробностей</RClickForDetails>
 
   <RequiresThis>Требует</RequiresThis>
   <LeadsTo>Приводит к</LeadsTo>
 
-  <ResearchLevels>{0} исследовано, ваш технический уровень {1}.</ResearchLevels>
-  <ResearchPenalty>Это будет стоить {0} больше времени, чтобы исследовать его.</ResearchPenalty>
+  <ResearchLevels>Уровень исследования {0}. Ваш технический уровень {1}.</ResearchLevels>
+  <ResearchPenalty>Вы потратите в {0} раза больше времени на это исследование.</ResearchPenalty>
 
   <RequireMissing>Требования отсутствуют!</RequireMissing>
-  <RequireBenchLabel>Требует верстак:</RequireBenchLabel>
-  <RequireFacilityLabel>Требует построить:</RequireFacilityLabel>
+  <RequireBenchLabel>Требуется верстак: </RequireBenchLabel>
+  <RequireFacilityLabel>Требуется построить: </RequireFacilityLabel>
 
-  <SearchPlaceholder>фильтровать</SearchPlaceholder>
-
+  <FilterTitleResearch>Исследовательские проекты: </FilterTitleResearch>
+  <FilterTitleUnlocks>Открывает: </FilterTitleUnlocks>
+  <FilterTitleTechLevel>Технический уровень: </FilterTitleTechLevel>
+  <FilterResults> Найдено результатов:  {0}</FilterResults>
+  
+  <FilterOpacityDesc>Прозрачность несоответствующих уровню исследований. По умолчанию: {0}, Текущее: {1}</FilterOpacityDesc>
+  
   <ResearchPal>ResearchPal</ResearchPal>
-  <ResearchPal.ShowNotificationPopup>Скрыть всплывающее уведомление</ResearchPal.ShowNotificationPopup>
-  <ResearchPal.ShowNotificationTip>Всякий раз, когда вы завершаете исследование, не показывать и показать уведомление по умолчанию.</ResearchPal.ShowNotificationTip>
-  <ResearchPal.ShouldPauseOnOpen>Пауза на экране</ResearchPal.ShouldPauseOnOpen>
-  <ResearchPal.ShouldPauseOnOpenTip>Всякий раз, игра должна приостанавливаться, когда отображается вкладка исследования.</ResearchPal.ShouldPauseOnOpenTip>
+  <ResearchPal.ShowNotificationPopup>Показать всплывающее уведомление</ResearchPal.ShowNotificationPopup>
+  <ResearchPal.ShowNotificationPopupTip>Когда исследование завершено, игра становится на паузу и показывает уведомление по умолчанию.</ResearchPal.ShowNotificationPopupTip>
+  <ResearchPal.ShouldPauseOnOpen>Пауза при открытии окна</ResearchPal.ShouldPauseOnOpen>
+  <ResearchPal.ShouldPauseOnOpenTip>Игра становится на паузу, когда отображается вкладка исследования.</ResearchPal.ShouldPauseOnOpenTip>
+
+  <ResearchPal.ShouldResetOnOpen>Сброс фильтров при новом открытии окна</ResearchPal.ShouldResetOnOpen>
+  <ResearchPal.ShouldResetOnOpenTip>Очищает фильтр поиска и сбрасывает положение прокрутки при следующем открытии окна.</ResearchPal.ShouldResetOnOpenTip>
+  <ResearchPal.ShowFilteredLinks>Подсветка промежуточных исследований при поиске</ResearchPal.ShowFilteredLinks>
+  <ResearchPal.ShowFilteredLinksTip>Подсветка цепочки всех промежуточных исследований. От базовых, до результата поиска по фильтру.</ResearchPal.ShowFilteredLinksTip>
+
+  <ResearchPal.DebugResearch>Инструмент отладки (чит)</ResearchPal.DebugResearch>
+  <ResearchPal.DebugResearchTip>Только когда активирован глобальный инструмент отладки.</ResearchPal.DebugResearchTip>
 
 </LanguageData>
