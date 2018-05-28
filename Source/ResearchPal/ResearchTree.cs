@@ -359,6 +359,7 @@ namespace ResearchPal
                 {
                     //Log.Message("moving overlapping root node " + overlap.ToString() + " to " + new IntVec2(overlap.Pos.x, overlap.Pos.z + maxWidth).ToString() + " because it overlaps node " + root.ToString());
                     bestPos += Math.Max(maxWidth, 1); // this is important - maxWidth can easily be 0, breaking the whole thing
+                    rootYOffset++;
                 }
 
                 // set position of this root to the starting offset
