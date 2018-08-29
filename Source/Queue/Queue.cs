@@ -4,7 +4,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Multiplayer.API;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -58,7 +57,6 @@ namespace FluffyResearchTree
                 Dequeue( node );
         }
 
-        [SyncMethod]
         public static void Dequeue( ResearchNode node )
         {
             // remove this node
@@ -133,7 +131,6 @@ namespace FluffyResearchTree
             Find.ResearchManager.currentProj = next?.Research; // null if next is null.
         }
 
-        [SyncMethod]
         public static void EnqueueRange( IEnumerable<ResearchNode> nodes, bool add )
         {
             TutorSystem.Notify_Event( "StartResearchProject" );

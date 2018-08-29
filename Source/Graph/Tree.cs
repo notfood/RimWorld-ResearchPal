@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Multiplayer.API;
 using UnityEngine;
 using Verse;
 using static FluffyResearchTree.Constants;
@@ -17,7 +16,6 @@ namespace FluffyResearchTree
 {
     public static class Tree
     {
-        public static bool Initialized;
         public static IntVec2 Size = IntVec2.Zero;
         private static List<Node> _nodes;
         private static List<Edge<Node,Node>> _edges;
@@ -72,46 +70,35 @@ namespace FluffyResearchTree
             }
         }
 
-        private static bool _initializing = false;
-        [SyncMethod]
         public static void Initialize()
         {
-            if ( Initialized ) return;
-
-            // make sure we only have one initializer running
-            if (_initializing)
-                return;
-            _initializing = true;
-
             // setup
-            LongEventHandler.QueueLongEvent( CheckPrerequisites, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
-            LongEventHandler.QueueLongEvent( CreateEdges, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
-            LongEventHandler.QueueLongEvent( HorizontalPositions, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
-            LongEventHandler.QueueLongEvent( NormalizeEdges, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
+            Log.Message("Fluffy.ResearchTree.PreparingTree.Setup".Translate());
+            CheckPrerequisites();
+            CreateEdges();
+            HorizontalPositions();
+            NormalizeEdges();
 #if DEBUG
-            LongEventHandler.QueueLongEvent( DebugStatus, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
+            DebugStatus();
 #endif
-
             // crossing reduction
-            LongEventHandler.QueueLongEvent( Collapse, "Fluffy.ResearchTree.PreparingTree.CrossingReduction", false, null);
-            LongEventHandler.QueueLongEvent( MinimizeCrossings, "Fluffy.ResearchTree.PreparingTree.CrossingReduction", false, null);
+            Log.Message("Fluffy.ResearchTree.PreparingTree.CrossingReduction".Translate());
+            Collapse();
+            MinimizeCrossings();
 #if DEBUG
-            LongEventHandler.QueueLongEvent(DebugStatus, "Fluffy.ResearchTree.PreparingTree.CrossingReduction", false, null);
+            DebugStatus();
 #endif
-
             // layout
-            LongEventHandler.QueueLongEvent( MinimizeEdgeLength, "Fluffy.ResearchTree.PreparingTree.Layout", false, null);
-            LongEventHandler.QueueLongEvent( RemoveEmptyRows, "Fluffy.ResearchTree.PreparingTree.Layout", false, null);
+            Log.Message("Fluffy.ResearchTree.PreparingTree.Layout".Translate());
+            MinimizeEdgeLength();
+            RemoveEmptyRows();
 #if DEBUG
-            LongEventHandler.QueueLongEvent(DebugStatus, "Fluffy.ResearchTree.PreparingTree.Layout", false, null);
+            DebugStatus();
 #endif
-
             // done!
-            LongEventHandler.QueueLongEvent( () => { Initialized = true; }, "Fluffy.ResearchTree.PreparingTree.Layout", false, null );
-
-            // tell research tab we're ready
-            LongEventHandler.QueueLongEvent( MainTabWindow_ResearchTree.Instance.Notify_TreeInitialized, "Fluffy.ResearchTree.RestoreQueue", false, null);
-
+            // we're ready
+            Log.Message("Fluffy.ResearchTree.RestoreQueue".Translate());
+            //MainTabWindow_ResearchTree.Instance.Notify_TreeInitialized();
         }
 
         private static void RemoveEmptyRows()
