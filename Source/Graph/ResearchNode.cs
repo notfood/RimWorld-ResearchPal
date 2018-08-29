@@ -304,23 +304,31 @@ namespace FluffyResearchTree
                 // LMB is queue operations, RMB is info
                 if ( Event.current.button == 0 && !Research.IsFinished )
                 {
-                    if ( !Queue.IsQueued( this ) )
+                    if (Settings.debugResearch && Prefs.DevMode && Event.current.control)
                     {
+                        var nodes = GetMissingRequiredRecursive()
+                                .Concat(new List<ResearchNode>(new[] { this }))
+                                .Distinct();
+                        foreach (ResearchNode n in nodes)
+                        {
+                            if (Queue.IsQueued(n))
+                                Queue.Dequeue(n);
+
+                            if (!n.Research.IsFinished)
+                                Find.ResearchManager.FinishProject(n.Research, false);
+                        }
+                        Queue.Notify_InstantFinished();
+                    } else if (!Queue.IsQueued(this)) {
                         // if shift is held, add to queue, otherwise replace queue
                         var queue = GetMissingRequiredRecursive()
-                            .Concat( new List<ResearchNode>( new[] {this} ) )
+                            .Concat(new List<ResearchNode>(new[] { this }))
                             .Distinct();
-                        Queue.EnqueueRange( queue, Event.current.shift );
+                        Queue.EnqueueRange(queue, Event.current.shift);
+                    } else {
+                        Queue.Dequeue(this);
                     }
-                    else
-                    {
-                        Queue.Dequeue( this );
-                    }
-                }
-                if ( DebugSettings.godMode && Prefs.DevMode && Event.current.button == 1 && !Research.IsFinished )
-                {
-                    Find.ResearchManager.FinishProject( Research );
-                    Queue.Notify_InstantFinished();
+                } else if (Event.current.button == 1) {
+                    ResearchTree.JumpToHelp(Research);
                 }
             }
         }
