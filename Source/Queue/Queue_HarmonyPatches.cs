@@ -38,7 +38,7 @@ namespace FluffyResearchTree
             // suppress vanilla completion dialog, we never want to show it.
             private static void Prefix( ref bool doCompletionDialog )
             {
-                doCompletionDialog = false;
+                doCompletionDialog = Settings.showNotification;
             }
         }
     }

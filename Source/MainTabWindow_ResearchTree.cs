@@ -135,9 +135,17 @@ namespace FluffyResearchTree
             base.PreOpen();
             SetRects();
 
-            if ( !Tree.Initialized )
-                // initialize tree
-                Tree.Initialize();
+            if (Settings.shouldPause)
+            {
+                forcePause = Settings.shouldPause;
+            }
+
+            if (Settings.shouldReset)
+            {
+                _query = "";
+                _scrollPosition = Vector2.zero;
+                ZoomLevel = 1f;
+            }
 
             // clear node availability caches
             ResearchNode.ClearCaches();
@@ -166,10 +174,6 @@ namespace FluffyResearchTree
 
         public override void DoWindowContents( Rect canvas )
         {
-            if ( !Tree.Initialized )
-                return;
-
-
             // top bar
             var topRect = new Rect(
                 canvas.xMin,

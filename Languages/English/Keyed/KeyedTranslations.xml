@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <LanguageData>
 
+	<Fluffy.ResearchTree>ResearchTree</Fluffy.ResearchTree>
+
 	<Fluffy.ResearchTree.AllowsBuildingX>Enables construction {0}</Fluffy.ResearchTree.AllowsBuildingX>
 	<Fluffy.ResearchTree.AllowsCraftingX>Enables recipe {0}</Fluffy.ResearchTree.AllowsCraftingX>
 	<Fluffy.ResearchTree.AllowsSowingXinY>Enables planting {0} in {1}</Fluffy.ResearchTree.AllowsSowingXinY>
@@ -24,9 +26,19 @@
 	<Fluffy.ResearchTree.NothingQueued>no research queued</Fluffy.ResearchTree.NothingQueued>
 	<Fluffy.ResearchTree.NextInQueue>Next in queue: {0}</Fluffy.ResearchTree.NextInQueue>
 
+	<Fluffy.ResearchTree.BuildingResearchTree>Building Research Tree</Fluffy.ResearchTree.BuildingResearchTree>
 	<Fluffy.ResearchTree.PreparingTree.Setup>Preparing research nodes</Fluffy.ResearchTree.PreparingTree.Setup>
 	<Fluffy.ResearchTree.PreparingTree.CrossingReduction>Reducing crossings</Fluffy.ResearchTree.PreparingTree.CrossingReduction>
 	<Fluffy.ResearchTree.PreparingTree.Layout>Finalizing layout</Fluffy.ResearchTree.PreparingTree.Layout>
 	<Fluffy.ResearchTree.RestoreQueue>Restoring queue</Fluffy.ResearchTree.RestoreQueue>
+
+	<Fluffy.ResearchTree.ShowNotificationPopup>Show Notification Popup</Fluffy.ResearchTree.ShowNotificationPopup>
+	<Fluffy.ResearchTree.ShowNotificationPopupTip>Whenever you finish research, pause and show the default notification.</Fluffy.ResearchTree.ShowNotificationPopupTip>
+	<Fluffy.ResearchTree.ShouldPauseOnOpen>Pause on Display</Fluffy.ResearchTree.ShouldPauseOnOpen>
+	<Fluffy.ResearchTree.ShouldPauseOnOpenTip>Whenever the game should pause when the research tab is displayed.</Fluffy.ResearchTree.ShouldPauseOnOpenTip>
+	<Fluffy.ResearchTree.DebugResearch>Debug Tools</Fluffy.ResearchTree.DebugResearch>
+	<Fluffy.ResearchTree.DebugResearchTip>Whenever debug tools should be active (dev mode only).</Fluffy.ResearchTree.DebugResearchTip>
+	<Fluffy.ResearchTree.ShouldResetOnOpen>Reset on Display</Fluffy.ResearchTree.ShouldResetOnOpen>
+	<Fluffy.ResearchTree.ShouldResetOnOpenTip>Clear filtering and reset scroll position.</Fluffy.ResearchTree.ShouldResetOnOpenTip>
 
 </LanguageData>
