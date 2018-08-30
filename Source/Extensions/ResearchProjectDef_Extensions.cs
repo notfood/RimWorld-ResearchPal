@@ -1,4 +1,4 @@
-﻿// ResearchProjectDef_Extensions.cs
+// ResearchProjectDef_Extensions.cs
 // Copyright Karel Kroeze, 2019-2020
 
 using System.Collections.Generic;
@@ -115,26 +115,27 @@ namespace FluffyResearchTree
 
             unlocks.AddRange( research.GetThingsUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>(
-                                                   d, "Fluffy.ResearchTree.AllowsBuildingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
+                                              
             unlocks.AddRange( research.GetTerrainUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>(
-                                                   d, "Fluffy.ResearchTree.AllowsBuildingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
+                                              
             unlocks.AddRange( research.GetRecipesUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>(
-                                                   d, "Fluffy.ResearchTree.AllowsCraftingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsCraftingX( d.LabelCap ) ) ) );
+                                              
             unlocks.AddRange( research.GetPlantsUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>(
-                                                   d, "Fluffy.ResearchTree.AllowsPlantingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsPlantingX( d.LabelCap ) ) ) );
+
+                                              
 
             // get unlocks for all descendant research, and remove duplicates.
             var descendants = research.Descendants();
             if ( dedupe && descendants.Any() )
             {
-                var descendantUnlocks = research.Descendants()
+                var descendantUnlocks = descendants
                                                 .SelectMany( c => c.GetUnlockDefsAndDescs( false ).Select( u => u.First ) )
                                                 .Distinct()
                                                 .ToList();

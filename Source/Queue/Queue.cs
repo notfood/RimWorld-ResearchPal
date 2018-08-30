@@ -170,12 +170,12 @@ namespace FluffyResearchTree
 
             if ( next != null )
             {
-                text += "\n\n" + "Fluffy.ResearchTree.NextInQueue".Translate( next.LabelCap );
+                text += "\n\n" + ResourceBank.String.NextInQueue(next.LabelCap);
                 Find.LetterStack.ReceiveLetter( label, text, LetterDefOf.PositiveEvent );
             }
             else
             {
-                text += "\n\n" + "Fluffy.ResearchTree.NextInQueue".Translate( "Fluffy.ResearchTree.None".Translate() );
+                text += "\n\n" + ResourceBank.String.NextInQueue("none");
                 Find.LetterStack.ReceiveLetter( label, text, LetterDefOf.NeutralEvent );
             }
         }
@@ -217,7 +217,7 @@ namespace FluffyResearchTree
             {
                 Text.Anchor = TextAnchor.MiddleCenter;
                 GUI.color   = TechLevelColor;
-                Widgets.Label( canvas, "Fluffy.ResearchTree.NothingQueued".Translate() );
+                Widgets.Label( canvas, ResourceBank.String.NothingQueued );
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color   = Color.white;
                 return;
