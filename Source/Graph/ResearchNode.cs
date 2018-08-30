@@ -245,7 +245,7 @@ namespace FluffyResearchTree
                 if ( !BuildingPresent() )
                 {
                     TooltipHandler.TipRegion( Rect,
-                        "Fluffy.ResearchTree.MissingFacilities".Translate( string.Join( ", ",
+                        ResourceBank.String.MissingFacilities( string.Join( ", ",
                             MissingFacilities().Select( td => td.LabelCap ).ToArray() ) ) );
                 }
 
@@ -375,19 +375,19 @@ namespace FluffyResearchTree
 
             if ( Queue.IsQueued( this ) )
             {
-                text.AppendLine( "Fluffy.ResearchTree.LClickRemoveFromQueue".Translate() );
+                text.AppendLine( ResourceBank.String.LClickReplaceQueue );
             }
             else
             {
-                text.AppendLine( "Fluffy.ResearchTree.LClickReplaceQueue".Translate() );
-                text.AppendLine( "Fluffy.ResearchTree.SLClickAddToQueue".Translate() );
+                text.AppendLine( ResourceBank.String.LClickReplaceQueue );
+                text.AppendLine( ResourceBank.String.SLClickAddToQueue );
             }
             if ( DebugSettings.godMode )
             {
-                text.AppendLine( "Fluffy.ResearchTree.CLClickDebugInstant".Translate() );
+                text.AppendLine( ResourceBank.String.CLClickDebugInstant );
             }
             if ( ResearchTree.HasHelpTreeLoaded){
-                text.AppendLine( "Fluffy.ResearchTree.RClickForDetails".Translate() );
+                text.AppendLine( ResourceBank.String.RClickForDetails );
             }
 
 
