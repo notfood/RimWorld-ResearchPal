@@ -33,15 +33,17 @@ namespace FluffyResearchTree
             Log.Debug( StackTraceUtility.ExtractStackTrace() );
         }
 
-        public void Notify_TreeInitialized()
-        {
-            SetRects();
-        }
-
         public override void PreOpen()
         {
             base.PreOpen();
+
             SetRects();
+
+            // settings changed, notify...
+            if (Tree.shouldSeparateByTechLevels != Settings.shouldSeparateByTechLevels)
+            {
+                Messages.Message(ResourceBank.String.NeedsRestart, MessageTypeDefOf.CautionInput, false);
+            }
 
             if (Settings.shouldPause)
             {
