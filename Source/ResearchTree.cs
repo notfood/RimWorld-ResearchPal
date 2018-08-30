@@ -17,6 +17,8 @@ namespace FluffyResearchTree
 
             LongEventHandler.QueueLongEvent(Tree.Initialize, "Fluffy.ResearchTree.BuildingResearchTree", false, null);
             LongEventHandler.ExecuteWhenFinished(InitializeHelpSuport);
+
+            GetSettings<Settings>();
         }
 
         #region Overrides of Mod
