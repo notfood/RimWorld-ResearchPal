@@ -130,34 +130,22 @@ namespace FluffyResearchTree
                                       .Where( d => d.IconTexture() != null )
                                       .Select(
                                               d =>
-                                              new Pair<Def, string>( d,
-                                                                     "Fluffy.ResearchTree.AllowsBuildingX".Translate(
-                                                                                                                     d
-                                                                                                                         .LabelCap ) ) ) );
+                                              new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
             unlocks.AddRange( research.GetTerrainUnlocked()
                                       .Where( d => d.IconTexture() != null )
                                       .Select(
                                               d =>
-                                              new Pair<Def, string>( d,
-                                                                     "Fluffy.ResearchTree.AllowsBuildingX".Translate(
-                                                                                                                     d
-                                                                                                                         .LabelCap ) ) ) );
+                                              new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
             unlocks.AddRange( research.GetRecipesUnlocked()
                                       .Where( d => d.IconTexture() != null )
                                       .Select(
                                               d =>
-                                              new Pair<Def, string>( d,
-                                                                     "Fluffy.ResearchTree.AllowsCraftingX".Translate(
-                                                                                                                     d
-                                                                                                                         .LabelCap ) ) ) );
+                                              new Pair<Def, string>( d, ResourceBank.String.AllowsCraftingX( d.LabelCap ) ) ) );
             unlocks.AddRange( research.GetPlantsUnlocked()
                                       .Where( d => d.IconTexture() != null )
                                       .Select(
                                               d =>
-                                              new Pair<Def, string>( d,
-                                                                     "Fluffy.ResearchTree.AllowsPlantingX".Translate(
-                                                                                                                     d
-                                                                                                                         .LabelCap ) ) ) );
+                                              new Pair<Def, string>( d, ResourceBank.String.AllowsPlantingX( d.LabelCap ) ) ) );
 
             _unlocksCache.Add( research, unlocks );
             return unlocks;
