@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class FloatMenu_Fixed : FloatMenu
     {

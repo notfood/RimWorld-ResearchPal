@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class Def_Extensions
     {
