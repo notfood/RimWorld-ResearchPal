@@ -9,7 +9,7 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class ResearchProjectDef_Extensions
     {
