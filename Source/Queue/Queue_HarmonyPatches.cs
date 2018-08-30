@@ -6,7 +6,7 @@ using Harmony;
 using RimWorld;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class HarmonyPatches_Queue
     {
