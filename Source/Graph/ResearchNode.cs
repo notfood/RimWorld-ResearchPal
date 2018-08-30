@@ -304,21 +304,25 @@ namespace FluffyResearchTree
                 // LMB is queue operations, RMB is info
                 if ( Event.current.button == 0 && !Research.IsFinished )
                 {
-                    if (Settings.debugResearch && Prefs.DevMode && Event.current.control)
+                    if (DebugSettings.godMode && Event.current.control)
                     {
                         var nodes = GetMissingRequiredRecursive()
                                 .Concat(new List<ResearchNode>(new[] { this }))
-                                .Distinct();
+                                .Distinct().Reverse();
                         foreach (ResearchNode n in nodes)
                         {
                             if (Queue.IsQueued(n))
                                 Queue.Dequeue(n);
 
-                            if (!n.Research.IsFinished)
+                            if (!n.Research.IsFinished) {
                                 Find.ResearchManager.FinishProject(n.Research, false);
+                            }
                         }
-                        Queue.Notify_InstantFinished();
-                    } else if (!Queue.IsQueued(this)) {
+                        if (nodes.Any()) {
+                            Messages.Message(ResourceBank.String.FinishedResearch(Research.LabelCap), MessageTypeDefOf.SilentInput, false);
+                            Queue.Notify_InstantFinished();
+                        }
+                    } else if ( !Queue.IsQueued(this) ) {
                         // if shift is held, add to queue, otherwise replace queue
                         var queue = GetMissingRequiredRecursive()
                             .Concat(new List<ResearchNode>(new[] { this }))
@@ -379,7 +383,10 @@ namespace FluffyResearchTree
             }
             if ( DebugSettings.godMode )
             {
-                text.AppendLine( "Fluffy.ResearchTree.RClickInstaFinish".Translate() );
+                text.AppendLine( "Fluffy.ResearchTree.CLClickDebugInstant".Translate() );
+            }
+            if ( ResearchTree.HasHelpTreeLoaded){
+                text.AppendLine( "Fluffy.ResearchTree.RClickForDetails".Translate() );
             }
 
 
