@@ -1,32 +1,20 @@
-﻿using System;
-
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
+using static FluffyResearchTree.ResourceBank.String;
 
 namespace FluffyResearchTree
 {
-    public class Settings : ModSettings
+  public class Settings : ModSettings
     {
         #region tuning parameters
 
-        public static bool showNotification = true;
-        public static bool shouldPause = false;
-        public static bool shouldReset = false;
-        public static bool debugResearch = false;
+        public static bool showNotification;
+        public static bool shouldPause;
+        public static bool shouldReset;
+        public static bool shouldSeparateByTechLevels;
+        public static bool debugResearch;
 
         #endregion tuning parameters
-
-        #region Strings
-        public static readonly string ShowNotificationPopup = "Fluffy.ResearchTree.ShowNotificationPopup".Translate();
-        public static readonly string ShowNotificationPopupTip = "Fluffy.ResearchTree.ShowNotificationPopupTip".Translate();
-        public static readonly string ShouldPauseOnOpen = "Fluffy.ResearchTree.ShouldPauseOnOpen".Translate();
-        public static readonly string ShouldPauseOnOpenTip = "Fluffy.ResearchTree.ShouldPauseOnOpenTip".Translate();
-        public static readonly string DebugResearch = "Fluffy.ResearchTree.DebugResearch".Translate();
-        public static readonly string DebugResearchTip = "Fluffy.ResearchTree.DebugResearchTip".Translate();
-
-        public static readonly string ShouldResetOnOpen = "Fluffy.ResearchTree.ShouldResetOnOpen".Translate();
-        public static readonly string ShouldResetOnOpenTip = "Fluffy.ResearchTree.ShouldResetOnOpenTip".Translate();
-        #endregion
 
         public static void DoSettingsWindowContents(Rect rect)
         {
@@ -36,6 +24,8 @@ namespace FluffyResearchTree
 
             list.CheckboxLabeled(ShowNotificationPopup, ref showNotification,
                                   ShowNotificationPopupTip);
+            list.CheckboxLabeled(ShouldSeparateByTechLevels, ref shouldSeparateByTechLevels,
+                                 ShouldSeparateByTechLevelsTip);
             list.Gap();
             list.CheckboxLabeled(ShouldPauseOnOpen, ref shouldPause,
                                   ShouldPauseOnOpenTip);
@@ -49,9 +39,9 @@ namespace FluffyResearchTree
 
         public override void ExposeData()
         {
-            base.ExposeData();
             Scribe_Values.Look(ref showNotification, "ShowNotificationPopup", true);
-            Scribe_Values.Look(ref shouldPause, "ShouldPauseOnOpen", false);
+            Scribe_Values.Look(ref shouldSeparateByTechLevels, "ShouldSeparateByTechLevels", false);
+            Scribe_Values.Look(ref shouldPause, "ShouldPauseOnOpen", true);
             Scribe_Values.Look(ref shouldReset, "ShouldResetOnOpen", false);
             Scribe_Values.Look(ref debugResearch, "DebugResearch", false);
         }
