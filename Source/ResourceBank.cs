@@ -22,6 +22,10 @@ namespace FluffyResearchTree
             #endregion
 
             public static readonly string NeedsRestart = "Fluffy.ResearchTree.NeedsRestart".Translate();
+
+            public static string FinishedResearch(string label) {
+                return "Fluffy.ResearchTree.ResearchFinished".Translate(label);
+            }
         }
   }
 }
