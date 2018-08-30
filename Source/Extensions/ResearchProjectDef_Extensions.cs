@@ -1,4 +1,4 @@
-﻿// Karel Kroeze
+// Karel Kroeze
 // ResearchProjectDef_Extensions.cs
 // 2016-12-28
 
@@ -118,20 +118,21 @@ namespace FluffyResearchTree
 
             unlocks.AddRange( research.GetThingsUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>( d, "Fluffy.ResearchTree.AllowsBuildingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
+                                              
             unlocks.AddRange( research.GetTerrainUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>( d, "Fluffy.ResearchTree.AllowsBuildingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
+                                              
             unlocks.AddRange( research.GetRecipesUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>( d, "Fluffy.ResearchTree.AllowsCraftingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsCraftingX( d.LabelCap ) ) ) );
+                                              
             unlocks.AddRange( research.GetPlantsUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>( d, "Fluffy.ResearchTree.AllowsPlantingX".Translate( d.LabelCap ) ) ) );
+                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsPlantingX( d.LabelCap ) ) ) );
 
-            // get unlocks for all descendant research, and remove duplicates.
-            var descendantUnlocks = research.Descendants().SelectMany( c => c.GetUnlockDefsAndDescs().Select( u => u.First ) ).ToList();
-            unlocks = unlocks.Where( u => !descendantUnlocks.Contains( u.First ) ).ToList();
+                                              
 
             _unlocksCache.Add( research, unlocks );
             return unlocks;

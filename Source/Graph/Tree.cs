@@ -77,7 +77,7 @@ namespace FluffyResearchTree
             shouldSeparateByTechLevels = Settings.shouldSeparateByTechLevels;
 
             // setup
-            Log.Message("Fluffy.ResearchTree.PreparingTree.Setup".Translate());
+            Log.Message(ResourceBank.String.PreparingTree_Setup);
             CheckPrerequisites();
             CreateEdges();
             HorizontalPositions();
@@ -86,14 +86,14 @@ namespace FluffyResearchTree
             DebugStatus();
 #endif
             // crossing reduction
-            Log.Message("Fluffy.ResearchTree.PreparingTree.CrossingReduction".Translate());
+            Log.Message(ResourceBank.String.PreparingTree_CrossingReduction);
             Collapse();
             MinimizeCrossings();
 #if DEBUG
             DebugStatus();
 #endif
             // layout
-            Log.Message("Fluffy.ResearchTree.PreparingTree.Layout".Translate());
+            Log.Message(ResourceBank.String.PreparingTree_Layout);
             MinimizeEdgeLength();
             SquashOrphans();
             RemoveEmptyRows();
@@ -102,7 +102,7 @@ namespace FluffyResearchTree
 #endif
             // done!
             // we're ready
-            Log.Message("Fluffy.ResearchTree.RestoreQueue".Translate());
+            Log.Message(ResourceBank.String.PreparingTree_RestoreQueue);
         }
 
         private static void RemoveEmptyRows()

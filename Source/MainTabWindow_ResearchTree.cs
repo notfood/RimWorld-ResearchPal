@@ -348,7 +348,7 @@ namespace FluffyResearchTree
                     }
 
                     if ( !options.Any() )
-                        options.Add( new FloatMenuOption( "Fluffy.ResearchTree.NoResearchFound".Translate(), null ) );
+                        options.Add( new FloatMenuOption( ResourceBank.String.NoResearchFound, null ) );
 
                     Find.WindowStack.Add( new FloatMenu_Fixed( options,
                         UI.GUIToScreenPoint( new Vector2( searchRect.xMin, searchRect.yMax ) ) ) );
