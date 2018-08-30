@@ -118,8 +118,8 @@ namespace FluffyResearchTree
 
             unlocks.AddRange( research.GetThingsUnlocked()
                                       .Where( d => d.IconTexture() != null )
-                                      .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
-                                              
+                                      .Select(
+                                       d => new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );                                              
             unlocks.AddRange( research.GetTerrainUnlocked()
                                       .Where( d => d.IconTexture() != null )
                                       .Select( d => new Pair<Def, string>( d, ResourceBank.String.AllowsBuildingX( d.LabelCap ) ) ) );
