@@ -17,6 +17,8 @@ namespace FluffyResearchTree
     public static class Tree
     {
         public static IntVec2 Size = IntVec2.Zero;
+        public static bool shouldSeparateByTechLevels;
+
         private static List<Node> _nodes;
         private static List<Edge<Node,Node>> _edges;
         private static List<TechLevel> _relevantTechLevels;
@@ -72,6 +74,8 @@ namespace FluffyResearchTree
 
         public static void Initialize()
         {
+            shouldSeparateByTechLevels = Settings.shouldSeparateByTechLevels;
+
             // setup
             Log.Message("Fluffy.ResearchTree.PreparingTree.Setup".Translate());
             CheckPrerequisites();
@@ -91,6 +95,7 @@ namespace FluffyResearchTree
             // layout
             Log.Message("Fluffy.ResearchTree.PreparingTree.Layout".Translate());
             MinimizeEdgeLength();
+            SquashOrphans();
             RemoveEmptyRows();
 #if DEBUG
             DebugStatus();
@@ -98,7 +103,6 @@ namespace FluffyResearchTree
             // done!
             // we're ready
             Log.Message("Fluffy.ResearchTree.RestoreQueue".Translate());
-            //MainTabWindow_ResearchTree.Instance.Notify_TreeInitialized();
         }
 
         private static void RemoveEmptyRows()
@@ -122,6 +126,45 @@ namespace FluffyResearchTree
                 }
             }
             Profiler.End();
+        }
+
+        static void SquashOrphans() {
+            if (!shouldSeparateByTechLevels) {
+                var nodes = Nodes.OfType<ResearchNode>().GroupBy(n => n.Edges.Any());
+
+
+                // get the min Y and max X from non orphans
+                var nonOrphans = nodes.FirstOrDefault(g => g.Key).ToList();
+                int minY = 0, maxX = 0;
+                foreach (var node in nonOrphans) {
+                    minY = Math.Min(node.Y, minY);
+                    maxX = Math.Max(node.X, maxX);
+                }
+
+                // orphans ordered by tech level
+                var orphans = nodes.FirstOrDefault(g => !g.Key).ToList().OrderBy(n => n.Research.techLevel);
+
+                // take into account the total non orphan layers and create as many rows required
+                int count = orphans.Count();
+                int rows = (count + maxX - 1) / maxX;
+                int index = 0;
+                foreach (var node in orphans) {
+                    node.SetDepth((index / rows) + 1);
+                    node.Y = (index % rows) + 1;
+
+                    index++;
+                    Log.Debug("\t{0}", node);
+                }
+
+                // push the non orphans down in Y if there is overlap
+                int overlap = rows - minY;
+                if (overlap > 0) {
+                    foreach (var node in nonOrphans)
+                    {
+                        node.Y += overlap + 1;
+                    }
+                }
+            }
         }
 
         private static void MinimizeEdgeLength()
@@ -383,16 +426,26 @@ namespace FluffyResearchTree
             }
         }
 
-        public static void HorizontalPositions()
+        static void HorizontalPositions() {
+            Log.Debug("Assigning horizontal positions.");
+            Profiler.Start();
+
+            if (shouldSeparateByTechLevels) {
+                HorizontalPositionsByTechLevels();
+            } else {
+                HorizontalPositionsByDensity();
+            }
+
+            Profiler.End();
+        }
+
+        static void HorizontalPositionsByTechLevels()
         {
             // get list of techlevels
             var techlevels = RelevantTechLevels;
             bool anyChange;
             var iteration = 1;
             var maxIterations = 50;
-
-            Log.Debug( "Assigning horizontal positions."  );
-            Profiler.Start();
 
             // assign horizontal positions based on tech levels and prerequisites
             do
@@ -426,8 +479,33 @@ namespace FluffyResearchTree
                 var nodes = Nodes.OfType<ResearchNode>().Where(n => n.Research.techLevel == techlevel);
                 _techLevelBounds[techlevel] = new IntRange( nodes.Min( n => n.X) - 1, nodes.Max( n => n.X ) );
             }
+        }
 
-            Profiler.End();
+        static void HorizontalPositionsByDensity() {
+            foreach (var node in Nodes)
+            {
+                List<Node> level = new List<Node>();
+                level.Add(node);
+
+                int depth = 1;
+                while (level.Count > 0 && level.Any(n => n.InNodes.Count > 0))
+                {
+                    // has any parent, increment level.
+                    depth++;
+
+                    // set level to next batch of distinct Parents, where Parents may not be itself.
+                    level = level.SelectMany(n => n.InNodes).Distinct().Where(n => n != node).ToList();
+
+                    // stop infinite recursion with loops of size greater than 2
+                    if (depth > 100)
+                    {
+                        Log.Error("{0} has more than 100 levels of prerequisites. Is the Research Tree defined as a loop?", false, node);
+                        break;
+                    }
+                }
+                node.SetDepth(depth);
+            }
+
         }
 
         private static void NormalizeEdges()
@@ -601,10 +679,13 @@ namespace FluffyResearchTree
         public static void Draw( Rect visibleRect )
         {
             Profiler.Start( "Tree.Draw"  );
-            Profiler.Start( "techlevels" );
-            foreach ( var techlevel in RelevantTechLevels )
-                DrawTechLevel( techlevel, visibleRect );
-            Profiler.End();
+            if (shouldSeparateByTechLevels)
+            {
+                Profiler.Start("techlevels");
+                foreach (var techlevel in RelevantTechLevels)
+                    DrawTechLevel(techlevel, visibleRect);
+                Profiler.End();
+            }
 
             Profiler.Start( "edges" );
             foreach ( var edge in Edges.OrderBy( e => e.DrawOrder ) )

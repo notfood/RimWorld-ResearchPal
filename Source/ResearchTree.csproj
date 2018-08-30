@@ -75,6 +75,7 @@
     <Compile Include="Queue\Queue_HarmonyPatches.cs" />
     <Compile Include="ResearchTree.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="ResourceBank.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
