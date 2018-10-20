@@ -134,7 +134,7 @@ namespace FluffyResearchTree
 
 
                 // get the min Y and max X from non orphans
-                var nonOrphans = nodes.FirstOrDefault(g => g.Key).ToList();
+                var nonOrphans = nodes.FirstOrDefault(g => g.Key);
                 int minY = 0, maxX = 0;
                 foreach (var node in nonOrphans) {
                     minY = Math.Min(node.Y, minY);
@@ -142,7 +142,7 @@ namespace FluffyResearchTree
                 }
 
                 // orphans ordered by tech level
-                var orphans = nodes.FirstOrDefault(g => !g.Key).ToList().OrderBy(n => n.Research.techLevel);
+                var orphans = nodes.FirstOrDefault(g => !g.Key).OrderBy(n => n.Research.techLevel);
 
                 // take into account the total non orphan layers and create as many rows required
                 int count = orphans.Count();
