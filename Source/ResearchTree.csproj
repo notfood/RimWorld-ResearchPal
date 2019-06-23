@@ -53,6 +53,9 @@
       <HintPath>..\Dlls\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="0MultiplayerAPI">
+      <HintPath>..\Dlls\0MultiplayerAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="ResearchTree.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ResourceBank.cs" />
+    <Compile Include="Multiplayer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
