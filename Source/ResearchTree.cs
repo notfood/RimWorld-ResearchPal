@@ -2,7 +2,7 @@
 // Copyright Karel Kroeze, 2018-2018
 
 using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using Multiplayer.API;
 using Verse;
 
@@ -12,7 +12,7 @@ namespace FluffyResearchTree
     {
         public ResearchTree( ModContentPack content ) : base( content )
         {
-            var harmony = HarmonyInstance.Create( "Fluffy.ResearchTree" );
+            var harmony = new Harmony( "Fluffy.ResearchTree" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
 
             if ( MP.enabled )
