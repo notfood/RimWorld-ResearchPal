@@ -57,6 +57,9 @@
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="0MultiplayerAPI">
+      <HintPath>packages\RimWorld.MultiplayerAPI.0.2.0\lib\net472\0MultiplayerAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
@@ -80,6 +83,7 @@
     <Compile Include="ResearchTree.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ResourceBank.cs" />
+    <Compile Include="Multiplayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
