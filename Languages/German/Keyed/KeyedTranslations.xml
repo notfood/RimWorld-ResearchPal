@@ -1,31 +1,31 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <LanguageData>
 
-	<Fluffy.ResearchTree.AllowsBuildingX>Ermöglicht die Konstruktion {0}</Fluffy.ResearchTree.AllowsBuildingX>
-	<Fluffy.ResearchTree.AllowsCraftingX>Aktiviert das Rezept {0}</Fluffy.ResearchTree.AllowsCraftingX>
-	<Fluffy.ResearchTree.AllowsSowingXinY>Ermöglicht das Anpflanzen von {0} in {1}</Fluffy.ResearchTree.AllowsSowingXinY>
-	<Fluffy.ResearchTree.AllowsPlantingX>Ermöglicht das Wachsen von {0}</Fluffy.ResearchTree.AllowsPlantingX>
+	<ResearchPal.AllowsBuildingX>Ermöglicht die Konstruktion {0}</ResearchPal.AllowsBuildingX>
+	<ResearchPal.AllowsCraftingX>Aktiviert das Rezept {0}</ResearchPal.AllowsCraftingX>
+	<ResearchPal.AllowsSowingXinY>Ermöglicht das Anpflanzen von {0} in {1}</ResearchPal.AllowsSowingXinY>
+	<ResearchPal.AllowsPlantingX>Ermöglicht das Wachsen von {0}</ResearchPal.AllowsPlantingX>
 
-	<Fluffy.ResearchTree.LClickReplaceQueue>Linksklick, um die Warteschlange zu ersetzen</Fluffy.ResearchTree.LClickReplaceQueue>
-	<Fluffy.ResearchTree.LClickRemoveFromQueue>Linksklick, um es von der Warteschlange zu entfernen</Fluffy.ResearchTree.LClickRemoveFromQueue>
-	<Fluffy.ResearchTree.SLClickAddToQueue>Shift-Linksklick, um es zur Warteschlange hinzuzufügen</Fluffy.ResearchTree.SLClickAddToQueue>
-	<!-- <Fluffy.ResearchTree.RClickForDetails>Right click for details</Fluffy.ResearchTree.RClickForDetails> -->
-	<Fluffy.ResearchTree.RClickInstaFinish>(DEBUG) Rechtsklick, um direkt abzuschließen</Fluffy.ResearchTree.RClickInstaFinish>
+	<ResearchPal.LClickReplaceQueue>Linksklick, um die Warteschlange zu ersetzen</ResearchPal.LClickReplaceQueue>
+	<ResearchPal.LClickRemoveFromQueue>Linksklick, um es von der Warteschlange zu entfernen</ResearchPal.LClickRemoveFromQueue>
+	<ResearchPal.SLClickAddToQueue>Shift-Linksklick, um es zur Warteschlange hinzuzufügen</ResearchPal.SLClickAddToQueue>
+	<!-- <ResearchPal.RClickForDetails>Right click for details</ResearchPal.RClickForDetails> -->
+	<ResearchPal.RClickInstaFinish>(DEBUG) Rechtsklick, um direkt abzuschließen</ResearchPal.RClickInstaFinish>
 
-	<Fluffy.ResearchTree.Requires>Benötigt</Fluffy.ResearchTree.Requires>
-	<Fluffy.ResearchTree.LeadsTo>Führt zu</Fluffy.ResearchTree.LeadsTo>
+	<ResearchPal.Requires>Benötigt</ResearchPal.Requires>
+	<ResearchPal.LeadsTo>Führt zu</ResearchPal.LeadsTo>
 
-	<Fluffy.ResearchTree.QueuedNode>Bereits in Warteschlange enthalten</Fluffy.ResearchTree.QueuedNode>
-	<Fluffy.ResearchTree.MissingFacilities>Fehlt {0}</Fluffy.ResearchTree.MissingFacilities>
-	<Fluffy.ResearchTree.MissingTechprints>Techprints benötigt {0}/{1}</Fluffy.ResearchTree.MissingTechprints>
+	<ResearchPal.QueuedNode>Bereits in Warteschlange enthalten</ResearchPal.QueuedNode>
+	<ResearchPal.MissingFacilities>Fehlt {0}</ResearchPal.MissingFacilities>
+	<ResearchPal.MissingTechprints>Techprints benötigt {0}/{1}</ResearchPal.MissingTechprints>
 
-	<Fluffy.ResearchTree.NoResearchFound>kein aktives Forschungsprojekt gefunden</Fluffy.ResearchTree.NoResearchFound>
-	<Fluffy.ResearchTree.NothingQueued>keine Warteschlange für Forschungsprojekte vorhanden</Fluffy.ResearchTree.NothingQueued>
-	<Fluffy.ResearchTree.NextInQueue>Nächstes in der Warteschlange: {0}</Fluffy.ResearchTree.NextInQueue>
+	<ResearchPal.NoResearchFound>kein aktives Forschungsprojekt gefunden</ResearchPal.NoResearchFound>
+	<ResearchPal.NothingQueued>keine Warteschlange für Forschungsprojekte vorhanden</ResearchPal.NothingQueued>
+	<ResearchPal.NextInQueue>Nächstes in der Warteschlange: {0}</ResearchPal.NextInQueue>
 
-	<Fluffy.ResearchTree.PreparingTree.Setup>Vorbereitung der Forschungsknoten</Fluffy.ResearchTree.PreparingTree.Setup>
-	<Fluffy.ResearchTree.PreparingTree.CrossingReduction>Reduziere Überschneidungen</Fluffy.ResearchTree.PreparingTree.CrossingReduction>
-	<Fluffy.ResearchTree.PreparingTree.Layout>Finalisiere Layout</Fluffy.ResearchTree.PreparingTree.Layout>
-	<Fluffy.ResearchTree.RestoreQueue>Stelle Warteschlange wieder her</Fluffy.ResearchTree.RestoreQueue>
+	<ResearchPal.PreparingTree.Setup>Vorbereitung der Forschungsknoten</ResearchPal.PreparingTree.Setup>
+	<ResearchPal.PreparingTree.CrossingReduction>Reduziere Überschneidungen</ResearchPal.PreparingTree.CrossingReduction>
+	<ResearchPal.PreparingTree.Layout>Finalisiere Layout</ResearchPal.PreparingTree.Layout>
+	<ResearchPal.PreparingTree.RestoreQueue>Stelle Warteschlange wieder her</ResearchPal.PreparingTree.RestoreQueue>
 
 </LanguageData>

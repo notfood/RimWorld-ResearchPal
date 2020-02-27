@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class Profiler
     {

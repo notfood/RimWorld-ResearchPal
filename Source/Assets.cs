@@ -6,7 +6,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     [StaticConstructorOnStartup]
     public static class Assets

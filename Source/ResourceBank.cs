@@ -1,12 +1,12 @@
 ﻿using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
   public static class ResourceBank
   {
         public static class String
         {
-            const string PREFIX = "Fluffy.ResearchTree.";
+            const string PREFIX = "ResearchPal.";
 
             static string TL(string s) => (PREFIX + s).Translate();
             static string TL(string s, params object[] args) => (PREFIX + s).Translate(args);

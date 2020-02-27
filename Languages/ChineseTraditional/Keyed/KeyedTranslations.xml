@@ -1,31 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <Fluffy.ResearchTree.AllowsBuildingX>解鎖建築：{0}</Fluffy.ResearchTree.AllowsBuildingX>
-  <Fluffy.ResearchTree.AllowsCraftingX>解鎖配方：{0}</Fluffy.ResearchTree.AllowsCraftingX>
-  <Fluffy.ResearchTree.AllowsSowingXinY>{1}可種植新農作物：{0}</Fluffy.ResearchTree.AllowsSowingXinY>
-  <Fluffy.ResearchTree.AllowsPlantingX>解鎖作物：{0}</Fluffy.ResearchTree.AllowsPlantingX>
+  <ResearchPal.AllowsBuildingX>解鎖建築：{0}</ResearchPal.AllowsBuildingX>
+  <ResearchPal.AllowsCraftingX>解鎖配方：{0}</ResearchPal.AllowsCraftingX>
+  <ResearchPal.AllowsSowingXinY>{1}可種植新農作物：{0}</ResearchPal.AllowsSowingXinY>
+  <ResearchPal.AllowsPlantingX>解鎖作物：{0}</ResearchPal.AllowsPlantingX>
 
-  <Fluffy.ResearchTree.LClickReplaceQueue>左鍵：變更排程</Fluffy.ResearchTree.LClickReplaceQueue>
-  <Fluffy.ResearchTree.LClickRemoveFromQueue>左鍵：從排程清單中移除該項研究</Fluffy.ResearchTree.LClickRemoveFromQueue>
-  <Fluffy.ResearchTree.SLClickAddToQueue> Shift+滑鼠左鍵將項目添加到隊列後</Fluffy.ResearchTree.SLClickAddToQueue>
-  <!-- <Fluffy.ResearchTree.RClickForDetails>右鍵單擊以獲取詳細信息</Fluffy.ResearchTree.RClickForDetails> -->
-  <Fluffy.ResearchTree.RClickInstaFinish>(DEBUG) 右鍵單擊即可立即完成</Fluffy.ResearchTree.RClickInstaFinish>
+  <ResearchPal.LClickReplaceQueue>左鍵：變更排程</ResearchPal.LClickReplaceQueue>
+  <ResearchPal.LClickRemoveFromQueue>左鍵：從排程清單中移除該項研究</ResearchPal.LClickRemoveFromQueue>
+  <ResearchPal.SLClickAddToQueue> Shift+滑鼠左鍵將項目添加到隊列後</ResearchPal.SLClickAddToQueue>
+  <!-- <ResearchPal.RClickForDetails>右鍵單擊以獲取詳細信息</ResearchPal.RClickForDetails> -->
+  <ResearchPal.RClickInstaFinish>(DEBUG) 右鍵單擊即可立即完成</ResearchPal.RClickInstaFinish>
 
-  <Fluffy.ResearchTree.Requires>需要</Fluffy.ResearchTree.Requires>
-  <Fluffy.ResearchTree.LeadsTo>導致</Fluffy.ResearchTree.LeadsTo>
+  <ResearchPal.Requires>需要</ResearchPal.Requires>
+  <ResearchPal.LeadsTo>導致</ResearchPal.LeadsTo>
 
-  <Fluffy.ResearchTree.QueuedNode>已排隊的研究點</Fluffy.ResearchTree.QueuedNode>
-  <Fluffy.ResearchTree.MissingFacilities>缺少 {0}</Fluffy.ResearchTree.MissingFacilities>
-  <Fluffy.ResearchTree.MissingTechprints>科技藍圖要求 {0}/{1}</Fluffy.ResearchTree.MissingTechprints>
+  <ResearchPal.QueuedNode>已排隊的研究點</ResearchPal.QueuedNode>
+  <ResearchPal.MissingFacilities>缺少 {0}</ResearchPal.MissingFacilities>
+  <ResearchPal.MissingTechprints>科技藍圖要求 {0}/{1}</ResearchPal.MissingTechprints>
 
-  <Fluffy.ResearchTree.NoResearchFound>找不到相關研究項目</Fluffy.ResearchTree.NoResearchFound>
-  <Fluffy.ResearchTree.NothingQueued>未安排任何研究排程</Fluffy.ResearchTree.NothingQueued>
-  <Fluffy.ResearchTree.NextInQueue>下個項目: {0}</Fluffy.ResearchTree.NextInQueue>
+  <ResearchPal.NoResearchFound>找不到相關研究項目</ResearchPal.NoResearchFound>
+  <ResearchPal.NothingQueued>未安排任何研究排程</ResearchPal.NothingQueued>
+  <ResearchPal.NextInQueue>下個項目: {0}</ResearchPal.NextInQueue>
 
-  <Fluffy.ResearchTree.PreparingTree.Setup>研究節點準備中</Fluffy.ResearchTree.PreparingTree.Setup>
-  <Fluffy.ResearchTree.PreparingTree.CrossingReduction>減少交叉</Fluffy.ResearchTree.PreparingTree.CrossingReduction>
-  <Fluffy.ResearchTree.PreparingTree.Layout>完成佈局</Fluffy.ResearchTree.PreparingTree.Layout>
-  <Fluffy.ResearchTree.RestoreQueue>回復隊列</Fluffy.ResearchTree.RestoreQueue>
+  <ResearchPal.PreparingTree.Setup>研究節點準備中</ResearchPal.PreparingTree.Setup>
+  <ResearchPal.PreparingTree.CrossingReduction>減少交叉</ResearchPal.PreparingTree.CrossingReduction>
+  <ResearchPal.PreparingTree.Layout>完成佈局</ResearchPal.PreparingTree.Layout>
+  <ResearchPal.PreparingTree.RestoreQueue>回復隊列</ResearchPal.PreparingTree.RestoreQueue>
 
 </LanguageData>

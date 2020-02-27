@@ -10,9 +10,9 @@ using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using static FluffyResearchTree.Constants;
+using static ResearchPal.Constants;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class Tree
     {

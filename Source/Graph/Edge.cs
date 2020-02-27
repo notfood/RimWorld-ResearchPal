@@ -1,12 +1,12 @@
-﻿// Edge.cs
+// Edge.cs
 // Copyright Karel Kroeze, 2018-2020
 
 using System;
 using UnityEngine;
-using static FluffyResearchTree.Assets;
-using static FluffyResearchTree.Constants;
+using static ResearchPal.Assets;
+using static ResearchPal.Constants;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class Edge<T1, T2> where T1 : Node where T2 : Node
     {

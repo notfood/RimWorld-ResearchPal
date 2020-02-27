@@ -6,9 +6,9 @@ using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using static FluffyResearchTree.Constants;
+using static ResearchPal.Constants;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class MainTabWindow_ResearchTree : MainTabWindow
     {

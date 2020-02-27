@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using Verse;
-using static FluffyResearchTree.ResourceBank.String;
+using static ResearchPal.ResourceBank.String;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
   public class Settings : ModSettings
     {

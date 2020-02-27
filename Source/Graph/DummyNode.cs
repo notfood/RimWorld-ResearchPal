@@ -4,7 +4,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class DummyNode : Node
     {

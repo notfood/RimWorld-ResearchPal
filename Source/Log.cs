@@ -1,9 +1,9 @@
-﻿// Log.cs
+// Log.cs
 // Copyright Karel Kroeze, 2018-2020
 
 using System.Diagnostics;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class Log
     {
@@ -19,7 +19,7 @@ namespace FluffyResearchTree
 
         private static string Format( string msg, params object[] args )
         {
-            return "ResearchTree :: " + string.Format( msg, args );
+            return "ResearchPal :: " + string.Format( msg, args );
         }
 
         public static void Error( string msg, bool once, params object[] args )

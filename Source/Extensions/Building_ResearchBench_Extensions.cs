@@ -5,7 +5,7 @@ using System.Linq;
 using RimWorld;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class Building_ResearchBench_Extensions
     {

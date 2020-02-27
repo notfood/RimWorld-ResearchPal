@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class Constants
     {

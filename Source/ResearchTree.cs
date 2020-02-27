@@ -7,15 +7,15 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class ResearchTree : Mod
     {
         public ResearchTree( ModContentPack content ) : base( content )
         {
-            new Harmony( "Fluffy.ResearchTree" ).PatchAll();
+            new Harmony("rimworld.ResearchPal").PatchAll();
 
-            LongEventHandler.QueueLongEvent(Tree.Initialize, "Fluffy.ResearchTree.BuildingResearchTree", false, null);
+            LongEventHandler.QueueLongEvent(Tree.Initialize, "ResearchPal.BuildingResearchTree", false, null);
             LongEventHandler.ExecuteWhenFinished(InitializeHelpSuport);
 
             GetSettings<Settings>();
@@ -23,7 +23,7 @@ namespace FluffyResearchTree
 
         #region Overrides of Mod
 
-        public override string SettingsCategory() { return "Fluffy.ResearchTree".Translate(); }
+        public override string SettingsCategory() { return "ResearchPal".Translate(); }
         public override void DoSettingsWindowContents(UnityEngine.Rect inRect) { Settings.DoSettingsWindowContents(inRect); }
 
         #endregion
