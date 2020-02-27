@@ -90,6 +90,7 @@
     <Compile Include="ResearchTree.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ResourceBank.cs" />
+    <Compile Include="Multiplayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
