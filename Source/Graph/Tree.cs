@@ -1,4 +1,4 @@
-// Karel Kroeze
+﻿// Karel Kroeze
 // Tree.cs
 // 2017-01-06
 
@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
-using static FluffyResearchTree.Constants;
+using static ResearchPal.Constants;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class Tree
     {

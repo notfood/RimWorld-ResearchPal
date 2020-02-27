@@ -1,4 +1,4 @@
-// Karel Kroeze
+﻿// Karel Kroeze
 // Node.cs
 // 2016-12-28
 // #define TRACE_POS
@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
-using static FluffyResearchTree.Constants;
+using static ResearchPal.Constants;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class Node
     {
