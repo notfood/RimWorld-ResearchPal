@@ -1,4 +1,4 @@
-// Karel Kroeze
+﻿// Karel Kroeze
 // ResearchProjectDef_Extensions.cs
 // 2016-12-28
 
@@ -9,7 +9,7 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class ResearchProjectDef_Extensions
     {

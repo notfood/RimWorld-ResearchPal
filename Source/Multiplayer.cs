@@ -3,7 +3,7 @@ using System.Linq;
 using Multiplayer.API;
 using Verse;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     // Can be run anywhere really. Multiplayer runs its API init code on Mod()
     // and since it runs always after Core, it's certain it will be ready.

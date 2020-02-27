@@ -8,10 +8,10 @@ using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
-using static FluffyResearchTree.Assets;
-using static FluffyResearchTree.Constants;
+using static ResearchPal.Assets;
+using static ResearchPal.Constants;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public class Queue : WorldComponent
     {

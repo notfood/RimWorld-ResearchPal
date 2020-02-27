@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics;
 
-namespace FluffyResearchTree
+namespace ResearchPal
 {
     public static class Log
     {
@@ -20,7 +20,7 @@ namespace FluffyResearchTree
 
         private static string Format( string msg, params object[] args )
         {
-            return "ResearchTree :: " + String.Format( msg, args );
+            return "ResearchPal :: " + String.Format( msg, args );
         }
 
         public static void Error( string msg, bool once, params object[] args ){

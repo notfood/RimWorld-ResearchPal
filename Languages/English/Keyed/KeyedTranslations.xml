@@ -1,44 +1,44 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <LanguageData>
 
-	<Fluffy.ResearchTree>ResearchTree</Fluffy.ResearchTree>
+	<ResearchPal>ResearchPal</ResearchPal>
 
-	<Fluffy.ResearchTree.AllowsBuildingX>Enables construction {0}</Fluffy.ResearchTree.AllowsBuildingX>
-	<Fluffy.ResearchTree.AllowsCraftingX>Enables recipe {0}</Fluffy.ResearchTree.AllowsCraftingX>
-	<Fluffy.ResearchTree.AllowsSowingXinY>Enables planting {0} in {1}</Fluffy.ResearchTree.AllowsSowingXinY>
-	<Fluffy.ResearchTree.AllowsPlantingX>Enables growing {0}</Fluffy.ResearchTree.AllowsPlantingX>
+	<ResearchPal.AllowsBuildingX>Enables construction {0}</ResearchPal.AllowsBuildingX>
+	<ResearchPal.AllowsCraftingX>Enables recipe {0}</ResearchPal.AllowsCraftingX>
+	<ResearchPal.AllowsSowingXinY>Enables planting {0} in {1}</ResearchPal.AllowsSowingXinY>
+	<ResearchPal.AllowsPlantingX>Enables growing {0}</ResearchPal.AllowsPlantingX>
 
-	<Fluffy.ResearchTree.LClickReplaceQueue>Left-Click to replace queue</Fluffy.ResearchTree.LClickReplaceQueue>
-	<Fluffy.ResearchTree.LClickRemoveFromQueue>Left-Click to remove from queue</Fluffy.ResearchTree.LClickRemoveFromQueue>
-	<Fluffy.ResearchTree.SLClickAddToQueue>Shift-Left-Click to add to queue</Fluffy.ResearchTree.SLClickAddToQueue>
-	<Fluffy.ResearchTree.CLClickDebugInstant>(DEBUG) Ctrl-Left-Click to instantly complete</Fluffy.ResearchTree.CLClickDebugInstant>
-	<Fluffy.ResearchTree.RClickForDetails>Right click for details</Fluffy.ResearchTree.RClickForDetails>
+	<ResearchPal.LClickReplaceQueue>Left-Click to replace queue</ResearchPal.LClickReplaceQueue>
+	<ResearchPal.LClickRemoveFromQueue>Left-Click to remove from queue</ResearchPal.LClickRemoveFromQueue>
+	<ResearchPal.SLClickAddToQueue>Shift-Left-Click to add to queue</ResearchPal.SLClickAddToQueue>
+	<ResearchPal.CLClickDebugInstant>(DEBUG) Ctrl-Left-Click to instantly complete</ResearchPal.CLClickDebugInstant>
+	<ResearchPal.RClickForDetails>Right click for details</ResearchPal.RClickForDetails>
 
-	<Fluffy.ResearchTree.Requires>Requires</Fluffy.ResearchTree.Requires>
-	<Fluffy.ResearchTree.LeadsTo>Leads to</Fluffy.ResearchTree.LeadsTo>
+	<ResearchPal.Requires>Requires</ResearchPal.Requires>
+	<ResearchPal.LeadsTo>Leads to</ResearchPal.LeadsTo>
 
-	<Fluffy.ResearchTree.QueuedNode>Already queued node</Fluffy.ResearchTree.QueuedNode>
-	<Fluffy.ResearchTree.MissingFacilities>Missing {0}</Fluffy.ResearchTree.MissingFacilities>
+	<ResearchPal.QueuedNode>Already queued node</ResearchPal.QueuedNode>
+	<ResearchPal.MissingFacilities>Missing {0}</ResearchPal.MissingFacilities>
 
-	<Fluffy.ResearchTree.NoResearchFound>no research found</Fluffy.ResearchTree.NoResearchFound>
-	<Fluffy.ResearchTree.NothingQueued>no research queued</Fluffy.ResearchTree.NothingQueued>
-	<Fluffy.ResearchTree.NextInQueue>Next in queue: {0}</Fluffy.ResearchTree.NextInQueue>
+	<ResearchPal.NoResearchFound>no research found</ResearchPal.NoResearchFound>
+	<ResearchPal.NothingQueued>no research queued</ResearchPal.NothingQueued>
+	<ResearchPal.NextInQueue>Next in queue: {0}</ResearchPal.NextInQueue>
 
-	<Fluffy.ResearchTree.BuildingResearchTree>Building Research Tree</Fluffy.ResearchTree.BuildingResearchTree>
-	<Fluffy.ResearchTree.PreparingTree.Setup>Preparing research nodes</Fluffy.ResearchTree.PreparingTree.Setup>
-	<Fluffy.ResearchTree.PreparingTree.CrossingReduction>Reducing crossings</Fluffy.ResearchTree.PreparingTree.CrossingReduction>
-	<Fluffy.ResearchTree.PreparingTree.Layout>Finalizing layout</Fluffy.ResearchTree.PreparingTree.Layout>
-	<Fluffy.ResearchTree.RestoreQueue>Restoring queue</Fluffy.ResearchTree.RestoreQueue>
+	<ResearchPal.BuildingResearchTree>Building Research Tree</ResearchPal.BuildingResearchTree>
+	<ResearchPal.PreparingTree.Setup>Preparing research nodes</ResearchPal.PreparingTree.Setup>
+	<ResearchPal.PreparingTree.CrossingReduction>Reducing crossings</ResearchPal.PreparingTree.CrossingReduction>
+	<ResearchPal.PreparingTree.Layout>Finalizing layout</ResearchPal.PreparingTree.Layout>
+	<ResearchPal.RestoreQueue>Restoring queue</ResearchPal.RestoreQueue>
 
-	<Fluffy.ResearchTree.ShowNotificationPopup>Show Notification Popup</Fluffy.ResearchTree.ShowNotificationPopup>
-	<Fluffy.ResearchTree.ShowNotificationPopupTip>Whenever you finish research, pause and show the default notification.</Fluffy.ResearchTree.ShowNotificationPopupTip>
-	<Fluffy.ResearchTree.ShouldSeparateByTechLevels>Group Researches by Tech Level</Fluffy.ResearchTree.ShouldSeparateByTechLevels>
-	<Fluffy.ResearchTree.ShouldSeparateByTechLevelsTip>Otherwise use a more dense layout (REQUIRES RESTART)</Fluffy.ResearchTree.ShouldSeparateByTechLevelsTip>
-	<Fluffy.ResearchTree.ShouldPauseOnOpen>Pause on Display</Fluffy.ResearchTree.ShouldPauseOnOpen>
-	<Fluffy.ResearchTree.ShouldPauseOnOpenTip>Whenever the game should pause when the research tab is displayed.</Fluffy.ResearchTree.ShouldPauseOnOpenTip>
-	<Fluffy.ResearchTree.ShouldResetOnOpen>Reset on Display</Fluffy.ResearchTree.ShouldResetOnOpen>
-	<Fluffy.ResearchTree.ShouldResetOnOpenTip>Clear filtering and reset scroll position.</Fluffy.ResearchTree.ShouldResetOnOpenTip>
+	<ResearchPal.ShowNotificationPopup>Show Notification Popup</ResearchPal.ShowNotificationPopup>
+	<ResearchPal.ShowNotificationPopupTip>Whenever you finish research, pause and show the default notification.</ResearchPal.ShowNotificationPopupTip>
+	<ResearchPal.ShouldSeparateByTechLevels>Group Researches by Tech Level</ResearchPal.ShouldSeparateByTechLevels>
+	<ResearchPal.ShouldSeparateByTechLevelsTip>Otherwise use a more dense layout (REQUIRES RESTART)</ResearchPal.ShouldSeparateByTechLevelsTip>
+	<ResearchPal.ShouldPauseOnOpen>Pause on Display</ResearchPal.ShouldPauseOnOpen>
+	<ResearchPal.ShouldPauseOnOpenTip>Whenever the game should pause when the research tab is displayed.</ResearchPal.ShouldPauseOnOpenTip>
+	<ResearchPal.ShouldResetOnOpen>Reset on Display</ResearchPal.ShouldResetOnOpen>
+	<ResearchPal.ShouldResetOnOpenTip>Clear filtering and reset scroll position.</ResearchPal.ShouldResetOnOpenTip>
     
-	<Fluffy.ResearchTree.NeedsRestart>Research settings changed, restart RimWorld to apply the change.</Fluffy.ResearchTree.NeedsRestart>
-	<Fluffy.ResearchTree.ResearchFinished>Finished research: {0}</Fluffy.ResearchTree.ResearchFinished>
+	<ResearchPal.NeedsRestart>Research settings changed, restart RimWorld to apply the change.</ResearchPal.NeedsRestart>
+	<ResearchPal.ResearchFinished>Finished research: {0}</ResearchPal.ResearchFinished>
 </LanguageData>

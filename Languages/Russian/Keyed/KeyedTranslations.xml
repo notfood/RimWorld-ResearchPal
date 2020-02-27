@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LanguageData>
-	<Fluffy.ResearchTree.AllowsBuildingX>Позволяет строить {0}</Fluffy.ResearchTree.AllowsBuildingX>
-	<Fluffy.ResearchTree.AllowsCraftingX>Позволяет {0}</Fluffy.ResearchTree.AllowsCraftingX>
-	<Fluffy.ResearchTree.AllowsSowingXinY>Позволяет высаживать {0} in {1}</Fluffy.ResearchTree.AllowsSowingXinY>
-	<Fluffy.ResearchTree.AllowsPlantingX>Позволяет выращивать {0}</Fluffy.ResearchTree.AllowsPlantingX>
+	<ResearchPal.AllowsBuildingX>Позволяет строить {0}</ResearchPal.AllowsBuildingX>
+	<ResearchPal.AllowsCraftingX>Позволяет {0}</ResearchPal.AllowsCraftingX>
+	<ResearchPal.AllowsSowingXinY>Позволяет высаживать {0} in {1}</ResearchPal.AllowsSowingXinY>
+	<ResearchPal.AllowsPlantingX>Позволяет выращивать {0}</ResearchPal.AllowsPlantingX>
 
-	<Fluffy.ResearchTree.LClickReplaceQueue>ЛКМ для замены в очереди</Fluffy.ResearchTree.LClickReplaceQueue>
-	<Fluffy.ResearchTree.LClickRemoveFromQueue>ЛКМ для удаления из очереди</Fluffy.ResearchTree.LClickRemoveFromQueue>
-	<Fluffy.ResearchTree.SLClickAddToQueue>Shift+ЛКМ для добавления в очередь</Fluffy.ResearchTree.SLClickAddToQueue>
-	<!-- <Fluffy.ResearchTree.RClickForDetails>ПКМ для отображения подробностей</Fluffy.ResearchTree.RClickForDetails> -->
-	<Fluffy.ResearchTree.RClickInstaFinish>(DEBUG) ПКМ для мгновенного изучения</Fluffy.ResearchTree.RClickInstaFinish>
+	<ResearchPal.LClickReplaceQueue>ЛКМ для замены в очереди</ResearchPal.LClickReplaceQueue>
+	<ResearchPal.LClickRemoveFromQueue>ЛКМ для удаления из очереди</ResearchPal.LClickRemoveFromQueue>
+	<ResearchPal.SLClickAddToQueue>Shift+ЛКМ для добавления в очередь</ResearchPal.SLClickAddToQueue>
+	<!-- <ResearchPal.RClickForDetails>ПКМ для отображения подробностей</ResearchPal.RClickForDetails> -->
+	<ResearchPal.RClickInstaFinish>(DEBUG) ПКМ для мгновенного изучения</ResearchPal.RClickInstaFinish>
 
-	<Fluffy.ResearchTree.Requires>Требует</Fluffy.ResearchTree.Requires>
-	<Fluffy.ResearchTree.LeadsTo>Ведет к</Fluffy.ResearchTree.LeadsTo>
+	<ResearchPal.Requires>Требует</ResearchPal.Requires>
+	<ResearchPal.LeadsTo>Ведет к</ResearchPal.LeadsTo>
 
-	<Fluffy.ResearchTree.QueuedNode>Уже в очереди</Fluffy.ResearchTree.QueuedNode>
-	<Fluffy.ResearchTree.MissingFacilities>Отсутствует {0}</Fluffy.ResearchTree.MissingFacilities>
+	<ResearchPal.QueuedNode>Уже в очереди</ResearchPal.QueuedNode>
+	<ResearchPal.MissingFacilities>Отсутствует {0}</ResearchPal.MissingFacilities>
 
-	<Fluffy.ResearchTree.NoResearchFound>нечего исследовать</Fluffy.ResearchTree.NoResearchFound>
-	<Fluffy.ResearchTree.NothingQueued>исследований не назначено</Fluffy.ResearchTree.NothingQueued>
-	<Fluffy.ResearchTree.NextInQueue>Следующее на очереди: {0}</Fluffy.ResearchTree.NextInQueue>
+	<ResearchPal.NoResearchFound>нечего исследовать</ResearchPal.NoResearchFound>
+	<ResearchPal.NothingQueued>исследований не назначено</ResearchPal.NothingQueued>
+	<ResearchPal.NextInQueue>Следующее на очереди: {0}</ResearchPal.NextInQueue>
 
-	<Fluffy.ResearchTree.PreparingTree.Setup>Подготовка списка исследований</Fluffy.ResearchTree.PreparingTree.Setup>
-	<Fluffy.ResearchTree.PreparingTree.CrossingReduction>Уменьшение пересечений</Fluffy.ResearchTree.PreparingTree.CrossingReduction>
-	<Fluffy.ResearchTree.PreparingTree.Layout>Окончательная обработка слоев</Fluffy.ResearchTree.PreparingTree.Layout>
-	<Fluffy.ResearchTree.RestoreQueue>Восстановление очереди</Fluffy.ResearchTree.RestoreQueue>
+	<ResearchPal.PreparingTree.Setup>Подготовка списка исследований</ResearchPal.PreparingTree.Setup>
+	<ResearchPal.PreparingTree.CrossingReduction>Уменьшение пересечений</ResearchPal.PreparingTree.CrossingReduction>
+	<ResearchPal.PreparingTree.Layout>Окончательная обработка слоев</ResearchPal.PreparingTree.Layout>
+	<ResearchPal.RestoreQueue>Восстановление очереди</ResearchPal.RestoreQueue>
 </LanguageData>
