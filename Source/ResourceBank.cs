@@ -42,6 +42,7 @@ namespace FluffyResearchTree
             public static readonly string RClickForDetails = TL("RClickForDetails");
 
             public static string MissingFacilities(string list) => TL("MissingFacilities", list);
+            public static string MissingTechprints(int techprintsApplied, int techprintCount) => TL("MissingTechprints", techprintsApplied, techprintCount);
             public static string FinishedResearch(string label) => TL("ResearchFinished", label);
             #endregion
 
